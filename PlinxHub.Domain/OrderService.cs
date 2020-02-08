@@ -1,21 +1,22 @@
-﻿using PlinxHub.Infrastructure.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using PlinxHub.Common.Models.Orders;
+using PlinxHub.Infrastructure.Repositories;
+using System.Threading.Tasks;
 
 namespace PlinxHub.Service
 {
     public class OrderService
     {
-        private readonly OrderRepository _orderRepository;
-        public OrderService(OrderRepository orderRepository)
+        private readonly IOrderRepository _orderRepository;
+        public OrderService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
         }
 
-        public GenerateNewOrder(OrderRepository order)
+        public async Task<Order> GenerateNewOrder(Order order)
         {
-            throw new NotImplementedException();
+            var response = _orderRepository.Create(order);
+            await _orderRepository.SaveAsync();
+            return response;
         }
     }
 }

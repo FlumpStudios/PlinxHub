@@ -8,6 +8,7 @@ using PlinxHub.Common.Models.Orders;
 using PlinxHub.Common.Extensions;
 using System.Threading.Tasks;
 using System.Linq;
+using PlinxHub.Tests.MockData;
 
 namespace PlinxHub.Infrastructure.Repositories.Tests
 {
@@ -19,55 +20,6 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
         private PlinxHubContext _mockPlinxHubContext;
 
         private DbContextOptions<PlinxHubContext> _contextOptions;
-        private IEnumerable<Order> MockOrder
-        {
-            get
-            {
-                return new List<Order>
-                {
-                    new Order
-                    {
-                        AddresssLine1 = "TestAdd1",
-                        AddresssLine2 = "TestAdd 2,",
-                        CompanyName = "TestCompany",
-                        County = "Test counry",
-                        CreatedDate = new DateTime(2000,1,1),
-                        EmailAddress = "Paul@yahoo.co.uk",
-                        FirstName = "Test fname",
-                        MediumBlogUserName = "Test blog name",
-                        OrderNumber = 1,
-                        PhoneNumber = "01895 123 123",
-                        Postcode = "Test postcode",
-                        PrimaryBrandColour = "Test col 1",
-                        SecondaryBrandColour = "test col2",
-                        Surname ="Test surname",
-                        TemplateNumber = 42,
-                        Town ="Test town",
-                        UpdatedDate = new DateTime(2000,1,1)
-                    },
-                    new Order
-                    {
-                        AddresssLine1 = "TestAdd4",
-                        AddresssLine2 = "TestAdd 5,",
-                        CompanyName = "TestCompany 2",
-                        County = "Test COuntry 3",
-                        CreatedDate = new DateTime(2000,2,2),
-                        EmailAddress = "Paul2@yahoo.co.uk",
-                        FirstName = "Test fname2",
-                        MediumBlogUserName = "Test blog name2",
-                        OrderNumber = 2,
-                        PhoneNumber = "01895 123 124",
-                        Postcode = "Test postcode",
-                        PrimaryBrandColour = "Test col 3",
-                        SecondaryBrandColour = "test col 4",
-                        Surname ="Test surname 2",
-                        TemplateNumber = 43,
-                        Town ="Test town 2",
-                        UpdatedDate = new DateTime(2000,2,2)
-                    }
-                };
-            }
-        }
 
         public int GetCount => _mockPlinxHubContext.Order.AsNoTracking().Count();
 
@@ -98,7 +50,7 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
             using (var isolatedContext = new PlinxHubContext(_contextOptions))
             {
                 isolatedContext.Database.EnsureDeleted();
-                isolatedContext.AddRange(MockOrder);
+                isolatedContext.AddRange(MockOrderData.MockOrder);
                 isolatedContext.SaveChanges();
             }
             _mockPlinxHubContext = new PlinxHubContext(_contextOptions);
@@ -112,7 +64,7 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
 
             //Act
             var actual = await unitUnderTest.Get();
-            var expected = MockOrder;
+            var expected = MockOrderData.MockOrder;
 
             Assert.IsTrue(expected.CompareByValue(actual));
         }
@@ -247,7 +199,7 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
         {
             //Arrange
             using var unitUnderTest = CreateOrderRepository();
-            var orderId = MockOrder.First().OrderNumber;
+            var orderId = MockOrderData.MockOrder.First().OrderNumber;
 
             //Act
             var result = await unitUnderTest.Exists(orderId);
@@ -264,7 +216,7 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
 
             //Act
             //Ensure order number is a number not in the mock DB
-            var orderId = MockOrder.Last().OrderNumber + 1;
+            var orderId = MockOrderData.MockOrder.Last().OrderNumber + 1;
             var result = await unitUnderTest.Exists(orderId);
 
             //Assert

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PlinxHub.Domain\PlinxHub.Service.csproj" />
     <ProjectReference Include="..\PlinxHub.Infrastructure\PlinxHub.Infrastructure.csproj" />
   </ItemGroup>
 
