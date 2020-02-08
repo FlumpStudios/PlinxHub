@@ -1,0 +1,73 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-PlinxHub-34AD59B9-D2A2-48BE-88E0-2B2C478132AC</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\Content\Images\Images\code.jpeg" />
+    <None Include="wwwroot\Content\Images\Images\contactPic.png" />
+    <None Include="wwwroot\Content\Images\Images\Facebook.png" />
+    <None Include="wwwroot\Content\Images\Images\favicon.ico" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\Design1.jpeg" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\Design2.jpeg" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\Design3.jpeg" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\mac.png" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\PC.png" />
+    <None Include="wwwroot\Content\Images\Images\ImageRotator\TAbles.png" />
+    <None Include="wwwroot\Content\Images\Images\Instagram.png" />
+    <None Include="wwwroot\Content\Images\Images\keys.jpeg" />
+    <None Include="wwwroot\Content\Images\Images\LinkedIn.png" />
+    <None Include="wwwroot\Content\Images\Images\LinkImages\About.png" />
+    <None Include="wwwroot\Content\Images\Images\LinkImages\Contact.png" />
+    <None Include="wwwroot\Content\Images\Images\LinkImages\Services.png" />
+    <None Include="wwwroot\Content\Images\Images\OurServices\Apps.png" />
+    <None Include="wwwroot\Content\Images\Images\OurServices\Code.png" />
+    <None Include="wwwroot\Content\Images\Images\OurServices\Ecommerce.png" />
+    <None Include="wwwroot\Content\Images\Images\OurServices\Games.png" />
+    <None Include="wwwroot\Content\Images\Images\OurServices\LogoDesign.png" />
+    <None Include="wwwroot\Content\Images\Images\People.png" />
+    <None Include="wwwroot\Content\Images\Images\Phone.png" />
+    <None Include="wwwroot\Content\Images\Images\PlinxLogo.png" />
+    <None Include="wwwroot\Content\Images\Images\services.png" />
+    <None Include="wwwroot\Content\Images\Images\Twitter.png" />
+    <None Include="wwwroot\Content\Images\Images\Youtube.png" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="AspNet.Security.OAuth.LinkedIn" Version="3.0.0" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Facebook" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.9.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.1" />
+    <PackageReference Include="MSTest.TestFramework" Version="2.1.0" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="Dtos\Request\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\Scripts\" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\PlinxHub.Common\PlinxHub.Common.csproj" />
+    <ProjectReference Include="..\PlinxHub.Domain\PlinxHub.Service.csproj" />
+    <ProjectReference Include="..\PlinxHub.Infrastructure\PlinxHub.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

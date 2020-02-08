@@ -1,0 +1,108 @@
+﻿    <div class="Contact-Details">
+        <div class="row">
+
+            <div class="col s12">
+                <div class="parallax-container">
+                    <div class="parallax"><img src="~/Content/Images/contactPic.png"></div>
+                    <div class="Contact-Header shadow">
+                        <h2 style="color:white">Contact Us</h2>
+                        <h3 style="color:white">Let us help design your future</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="section white contact-section col s12">
+                <div class="col s12 subtitle">
+                    <h4 style="text-align:center">Get in touch with us</h4>
+                    <hr style="width:25%" />
+                </div>
+
+                <div class="container">
+                    <div class="col s12 m6">
+                        <br />
+
+                        <p>Plinx are here to lead you into the future! We have a wide range of services and expertise to suite your digital needs.</p>
+                        <p><strong>Here's how Plinx can help you</strong> </p>
+                        <ul style="list-style:disc"></ul>
+                        <li>Bespoke Web design</li>
+                        <li>Templated web design</li>
+                        <li>e-commerce solutions</li>
+                        <li>Web design with intergrated database support </li>
+                        <li>Logo Design</li>
+                        <li>Phone and Browser game design</li>
+                        <li>Multimedia design</li>
+                        <li>Custom Built web and phone apps</li>
+                        <li>Templated App design</li>
+
+
+                    </div>
+                    <div class="col s12 m6">
+                        @using (Html.BeginForm("SendEmail", "Home", FormMethod.Post))
+                        {
+
+                            <div class="row">
+
+                                <div class="input-field col s12 m6">
+                                    <input id="Name" name="Name" type="text" class="validate">
+                                    <label for="Name">Name</label>
+                                </div>
+
+
+                                <div class="input-field col s12 m6">
+                                    <input id="Email_Address" type="text" name="Email_Address" class="validate">
+                                    <label for="Email_Addresss">Email Address</label>
+                                </div>
+
+
+                                <div class="input-field col s12 m6">
+                                    <input id="Phone_number" type="text" name="Phone_number" class="validate">
+                                    <label for="Phone_number">Phone number(optional)</label>
+                                </div>
+
+                                <div class="input-field col s12 m6">
+                                    <input id="Organisation" type="text" name="Organisation" class="validate">
+                                    <label for="Organisation">Organisation</label>
+                                </div>
+
+
+                                <div class="input-field col s12 ">
+                                    <input id="Message" name="Message" type="text" class="validate">
+                                    <label for="Message">Message</label>
+                                </div>
+                            </div>
+                            <div class="Message-Reply">@ViewBag.MessageReply</div>
+                            <button class="btn waves-effect waves-light" type="submit" name="action">
+                                Submit
+                                <i class="material-icons right">send</i>
+                            </button>
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="col s12">
+                <div id="map"></div>
+                <script>
+                    function initMap() {
+                        var uluru = { lat: 52.3, lng: -1.5333 };
+                        var foo = { lat: 52.3, lng: -1.500 }
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 15,
+                            center: uluru,
+                            scrollwheel: false
+                        });
+                        var marker = new google.maps.Marker({
+                            position: uluru,
+                            map: map
+                        });
+                    }
+
+                </script>
+                          @* Put map source here *@
+            </div>
+        </div>
+
+        <div class="col s12">
+            <div class="parallax-container">
+                <div class="parallax"><img src="~/Content/Images/contactPic.png"></div>
+            </div>
+        </div>
+    </div>

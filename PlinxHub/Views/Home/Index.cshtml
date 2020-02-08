@@ -1,0 +1,131 @@
+﻿<div class="slider fullscreen">
+    <ul class="slides">
+        <li>
+            <img src="~/Content/Images/ImageRotator/mac.png"> <!-- random image -->
+            <div class="caption  right-align">
+                <h3 style="color:white">Welcome to Plinx</h3>
+                <h5 class="light grey-text text-lighten-3">creative web and app design</h5>
+            </div>
+        </li>
+        <li>
+            <img src="~/Content/Images/ImageRotator/PC.png"> <!-- random image -->
+            <div class="caption center-align">
+
+                <h3 style="color:white">We've got you covered!</h3>
+                <h5 class="light grey-text text-lighten-3">Whether it be web, logo or app design</h5>
+            </div>
+        </li>
+        <li>
+            <img src="~/Content/Images/ImageRotator/Design3.jpeg"> <!-- random image -->
+            <div class="caption left-align">
+                <h3 style="color:white">We're friendly :)</h3>
+                <h5 class="light grey-text text-lighten-3">Please feel free to contact us <a href="~/Home/Contact">here</a></h5>
+            </div>
+        </li>
+    </ul>
+    <div style="padding-top:10px">
+        <div class="container">
+            <div class="row">
+                <div class="Rotator">
+                    <div class="revealOnScroll" data-animation="flipInX" data-timeout="250">
+                        <div class="col s12 m7">
+                            <h3 class="Headers">Fairly Priced</h3>
+                            <h2 class="Headers">Quality Web Design</h2>
+                        </div>
+                        <div class="col s12 m5">
+                            <p>Plinx web design offers simple, out of the box, web solutions for individuals and companies looking for straight forward, affordable and beautiful web designs. </p>
+                            <p>Here are Plinx we are passionate about web design and whether you're looking for a simple, single page website or a large scale e-commerce solution...we've got you covered.</p>
+                        </div>
+                        <div>
+                        </div>
+                        <hr />
+                    </div>
+                    <div class="phone">
+                        <div class="col s12 m6" style="padding-top:25px;">
+                            <img src="~/Content/Images/Phone.png" class="responsive-img mobilePic revealOnScroll" data-animation="fadeInLeft" data-timeout="400">
+                        </div>
+                        <div class="col s12 m6 revealOnScroll" data-animation="fadeInRight" data-timeout="400">
+                            <h3 class="Headers">Want an app with that?</h3>
+                            <h5 class="Headers">We also provide the perfect app to complient your site</h5>
+                            <p>With more and more people turning to their phones for everyday solutions, having a presence on the app store can be a big advantage.</p>
+                            <p>We can provide a smart, easy to use, app that will perfectly compliment your new website.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr />
+            <div class="revealOnScroll" data-animation="bounceIn" data-timeout="400">
+                <h3 style="text-align:center">Want to keep up to date with Plinx?</h3>
+                <h5 style="text-align:center">Follow us on social media for all the latest updates</h5>
+                <div class="carousel" id="templateRotator" style="height:310px;">
+                    <a class="carousel-item" href="https://www.facebook.com/PlinxTech/" target="_blank"><img src="~/Content/Images/Facebook.png"></a>
+                    <a class="carousel-item" href="https://twitter.com/Plinx_tech" target="_blank"><img src="~/Content/Images/Twitter.png"></a>
+                    <a class="carousel-item" href="https://www.instagram.com/plinx_tech"><img src="~/Content/Images/Instagram.png" target="_blank"></a>
+                    <a class="carousel-item" href="https://www.linkedin.com/in/paul-marrable-93704562/" target="_blank"><img src="~/Content/Images/LinkedIn.png"></a>
+                    <a class="carousel-item" href="https://www.youtube.com/channel/UC67A2FMkb43oEgm9poWAExQ" target="_blank"><img src="~/Content/Images/Youtube.png"></a>
+                </div>
+                <div class="col s12" id="TemplateInfo">
+                    <!-- <p>
+                         Bespoke websites can be notoriously expensive, so if you're looking for a beautifully designed website that won't break the bank, why not check out one of our customisable templates?
+                     </p>
+                        -->
+                    <p>
+                        Click on one of the images above to check out what we've been up to.
+                    </p>
+                </div>
+            </div>
+            <hr />
+            <div class="row image-links">
+                <div class="col l4 s12">
+                    <div class="card revealOnScroll" data-animation="flipInX" data-timeout="200">
+                        <div class="card-image">
+                            <img src="~/Content/Images/LinkImages/About.png">
+                            <span class="card-title">About us</span>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Find out more about us
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="/home/about">find out more</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col l4 s12">
+                    <div class="card revealOnScroll" data-animation="flipInX" data-timeout="100">
+                        <div class="card-image">
+                            <img src="~/Content/Images/LinkImages/Contact.png">
+                            <span class="card-title">Contact us</span>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                We're friendly :)
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="/home/contact">Get in contact</a>
+                        </div>
+                    </div>
+                </div><div class="col l4 s12">
+                    <div class="card revealOnScroll" data-animation="flipInX" data-timeout="300">
+                        <div class="card-image">
+                            <img src="~/Content/Images/LinkImages/Services.png">
+                            <span class="card-title">Our services</span>
+                        </div>
+                        <div class="card-content">
+                            <p>
+                                Find out what we offer
+                            </p>
+                        </div>
+                        <div class="card-action">
+                            <a href="/home/OurServices">Find out more</a>
+                        </div>
+                    </div>
+                </div>
+                <i class="medium material-icons to-top" onclick="toTop()">navigation</i>
+            </div>
+            <partial name="Footer" />
+        </div>
+    </div>
+</div>

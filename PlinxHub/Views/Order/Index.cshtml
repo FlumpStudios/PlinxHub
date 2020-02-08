@@ -1,0 +1,104 @@
+﻿@model PlinxHub.API.Dtos.Response.Order
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="CompanyName" class="control-label"></label>
+                <input asp-for="CompanyName" class="form-control" />
+                <span asp-validation-for="CompanyName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FirstName" class="control-label"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Surname" class="control-label"></label>
+                <input asp-for="Surname" class="form-control" />
+                <span asp-validation-for="Surname" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddresssLine1" class="control-label"></label>
+                <input asp-for="AddresssLine1" class="form-control" />
+                <span asp-validation-for="AddresssLine1" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AddresssLine2" class="control-label"></label>
+                <input asp-for="AddresssLine2" class="form-control" />
+                <span asp-validation-for="AddresssLine2" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Town" class="control-label"></label>
+                <input asp-for="Town" class="form-control" />
+                <span asp-validation-for="Town" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="County" class="control-label"></label>
+                <input asp-for="County" class="form-control" />
+                <span asp-validation-for="County" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Postcode" class="control-label"></label>
+                <input asp-for="Postcode" class="form-control" />
+                <span asp-validation-for="Postcode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EmailAddress" class="control-label"></label>
+                <input asp-for="EmailAddress" class="form-control" />
+                <span asp-validation-for="EmailAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TemplateNumber" class="control-label"></label>
+                <input asp-for="TemplateNumber" class="form-control" />
+                <span asp-validation-for="TemplateNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PrimaryBrandColour" class="control-label"></label>
+                <input asp-for="PrimaryBrandColour" class="form-control" />
+                <span asp-validation-for="PrimaryBrandColour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SecondaryBrandColour" class="control-label"></label>
+                <input asp-for="SecondaryBrandColour" class="form-control" />
+                <span asp-validation-for="SecondaryBrandColour" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MediumBlogUserName" class="control-label"></label>
+                <input asp-for="MediumBlogUserName" class="form-control" />
+                <span asp-validation-for="MediumBlogUserName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+</body>
+</html>

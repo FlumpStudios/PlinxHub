@@ -1,0 +1,131 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<html>
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="~/css/materialize.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/MainCSS.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="~/css/animate.css" media="screen,projection" />
+    <script src="https://kit.fontawesome.com/099799cc9c.js" crossorigin="anonymous"></script>
+    <!-- <link type="text/css" rel="stylesheet" href="~/Content/css/style.css" media="screen,projection" /> -->
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+    <div class="parallax-container">
+        <div class="Services-Header shadow">
+            <h2 style="color:white">@ViewData["Title"]</h2>
+            <h3 style="color:white">Register your Plinx account</h3>
+        </div>
+        <div class="parallax"><img src="~/Content/Images/login/handshake.jpg"></div>
+    </div>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <div class="row">
+            <div class="col m4">
+                <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                    <h4>Create a new account.</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Input.Email"></label>
+                        <input asp-for="Input.Email" class="form-control" />
+                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.Password"></label>
+                        <input asp-for="Input.Password" class="form-control" />
+                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Input.ConfirmPassword"></label>
+                        <input asp-for="Input.ConfirmPassword" class="form-control" />
+                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </form>
+            </div>
+            <div class="col m2"></div>
+            <div class="col m4 ">
+                <section>
+                    <h4>Or register with...</h4>
+                    <hr />
+                    @{
+                        if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                        {
+                            <div>
+                                <p>
+                                    There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                                    for details on setting up this ASP.NET application to support logging in via external services.
+                                </p>
+                            </div>
+                        }
+                        else
+                        {
+                            <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                                <div>
+                                    @foreach (var provider in Model.ExternalLogins)
+                                    {
+                                        <p>
+                                            @if (string.Equals(@provider.DisplayName, "twitter", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#00acee" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-twitter"></i> @provider.DisplayName</button>
+                                            }
+                                            @if (string.Equals(@provider.DisplayName, "facebook", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#3b5998" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-facebook"></i> @provider.DisplayName</button>
+                                            }
+                                            @if (string.Equals(@provider.DisplayName, "linkedin", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#0e76a8" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-linkedin-in"></i> @provider.DisplayName</button>
+                                            }
+                                        </p>
+                                    }
+                                </div>
+                            </form>
+                        }
+                    }
+                </section>
+            </div>
+        </div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="~/Content/Images/login/handshake.jpg"></div>
+    </div>
+    <partial name="Footer" />
+</body>
+</html>
+
+<!--Import jQuery before materialize.js-->
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="~/Scripts/indexScript.js"></script>
+<script src="~/Scripts/jquery.textillate.js"></script>
+<script src="~/Scripts/jquery.lettering.js"></script>
+<script src="~/Scripts/jquery.fittext.js"></script>
+<script src="~/js/materialize.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js"></script>
+<script src="~/js/materialize.min.js"></script>
+<script type="text/javascript" src="~js/materialize.min.js"></script>
+<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+<style>
+@@media only screen and (min-width: 1475px) {
+   .social-buttons {
+        width: 50%
+    }
+}  
+@@media only screen and (max-width: 1475px) {
+   .social-buttons {
+        width: 100%
+    }
+}  
+</style>
