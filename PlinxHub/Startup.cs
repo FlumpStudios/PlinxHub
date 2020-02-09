@@ -1,3 +1,4 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,8 @@ using Microsoft.AspNetCore.Http;
 using PlinxHub.Common.Models;
 using PlinxHub.Infrastructure.Data;
 using PlinxHub.Infrastructure.Repositories;
+using PlinxHub.Ioc.Config;
+using PlinxHub.Service;
 
 namespace PlinxHub
 {
@@ -17,13 +20,10 @@ namespace PlinxHub
 
         private AppSecrets _secrets;
 
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-    
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -59,6 +59,9 @@ namespace PlinxHub
             });
 
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IOrderService, OrderService>();
+            MapperConfiguration config = MapperConfig.Get();
+            services.AddSingleton<IMapper>(new Mapper(config));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

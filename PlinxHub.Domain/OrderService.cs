@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace PlinxHub.Service
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
         public OrderService(IOrderRepository orderRepository)
