@@ -4,19 +4,34 @@
     ViewData["Title"] = "Register confirmation";
 }
 
-<h1>@ViewData["Title"]</h1>
-@{
-    if (@Model.DisplayConfirmAccountLink)
-    {
-<p>
-    This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
-    Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
-</p>
-    }
-    else
-    {
-<p>
-        Please check your email to confirm your account.
-</p>
-    }
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
+    <div class="parallax-container">
+        <div class="Services-Header shadow">
+            <h2 style="color:white">@ViewData["Title"]</h2>
+            <h3 style="color:white">Bye then!</h3>
+        </div>
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
+    <div class="container">
+        <div class="row">
+            @{
+                if (@Model.DisplayConfirmAccountLink)
+                {
+                    <p>
+                        This app does not currently have a real email sender registered, see <a href="https://aka.ms/aspaccountconf">these docs</a> for how to configure a real email sender.
+                        Normally this would be emailed: <a id="confirm-link" href="@Model.EmailConfirmationUrl">Click here to confirm your account</a>
+                    </p>
+                }
+                else
+                {
+                    <p>
+                        Please check your email to confirm your account.
+                    </p>
+                }
+            }
+        </div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
 }

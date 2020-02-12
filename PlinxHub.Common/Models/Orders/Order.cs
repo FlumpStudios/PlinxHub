@@ -8,9 +8,11 @@ namespace PlinxHub.Common.Models.Orders
         [Key]
         public int OrderNumber { get; set; }
 
+        public Guid UserId { get; set; }
+
         [MaxLength(50)]
         public string CompanyName { get; set; }
-
+        
         [MaxLength(50)]
         public string FirstName { get; set; }
 

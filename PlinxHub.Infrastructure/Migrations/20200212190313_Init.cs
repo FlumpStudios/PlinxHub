@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PlinxHub.Infrastructure.Migrations.PlinxHub
+namespace PlinxHub.Infrastructure.Migrations
 {
-    public partial class OrderUpdate : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

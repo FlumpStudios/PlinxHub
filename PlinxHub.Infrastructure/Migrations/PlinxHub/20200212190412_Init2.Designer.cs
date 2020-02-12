@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PlinxHub.Infrastructure.Data;
+using PlinxHub.Common.Data;
 
-namespace PlinxHub.Infrastructure.Migrations
+namespace PlinxHub.Infrastructure.Migrations.PlinxHub
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200206225623_InitialCommit")]
-    partial class InitialCommit
+    [DbContext(typeof(PlinxHubContext))]
+    [Migration("20200212190412_Init2")]
+    partial class Init2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -9,6 +9,7 @@ using PlinxHub.Common.Extensions;
 using System.Threading.Tasks;
 using System.Linq;
 using PlinxHub.Tests.MockData;
+using PlinxHub.Infrastructure.Data;
 
 namespace PlinxHub.Infrastructure.Repositories.Tests
 {
@@ -17,9 +18,9 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
     {
         private MockRepository _mockRepository;
 
-        private PlinxHubContext _mockPlinxHubContext;
+        private ApplicationDbContext _mockPlinxHubContext;
 
-        private DbContextOptions<PlinxHubContext> _contextOptions;
+        private DbContextOptions<ApplicationDbContext> _contextOptions;
 
         public int GetCount => _mockPlinxHubContext.Order.AsNoTracking().Count();
 
@@ -32,12 +33,12 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
             _mockRepository = new MockRepository(MockBehavior.Strict);
             const string dbName = "PolicyRepoTestDataBase";
 
-            _contextOptions = new DbContextOptionsBuilder<PlinxHubContext>()
+            _contextOptions = new DbContextOptionsBuilder<ApplicationDbContext>()
               .UseInMemoryDatabase(databaseName: dbName)
               .Options;
 
             //Setup the context which is available to all tests.
-            var globlalContext = new PlinxHubContext(_contextOptions);
+            var globlalContext = new ApplicationDbContext(_contextOptions);
             ResetInMemoryDB();
         }
 
@@ -47,13 +48,13 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
         private void ResetInMemoryDB()
         {
             //Setup DB on seperate instance and create records on isolated context instance, so we can easily reset the db after each test
-            using (var isolatedContext = new PlinxHubContext(_contextOptions))
+            using (var isolatedContext = new ApplicationDbContext(_contextOptions))
             {
                 isolatedContext.Database.EnsureDeleted();
                 isolatedContext.AddRange(MockOrderData.MockOrder);
                 isolatedContext.SaveChanges();
             }
-            _mockPlinxHubContext = new PlinxHubContext(_contextOptions);
+            _mockPlinxHubContext = new ApplicationDbContext(_contextOptions);
         }
 
         [TestMethod()]

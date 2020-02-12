@@ -4,6 +4,7 @@ using AutoMapper;
 using PlinxHub.Service;
 using dm = PlinxHub.Common.Models.Orders;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PlinxHub.API.Controllers
 {
@@ -11,6 +12,7 @@ namespace PlinxHub.API.Controllers
     {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
+
         public OrderController(
             IOrderService orderService,
             IMapper mapper)
@@ -19,25 +21,27 @@ namespace PlinxHub.API.Controllers
             _mapper = mapper;
         }
 
+        [Authorize]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult OrderConfirmation(int id)
+        public ActionResult OrderConfirmation([FromRoute]int id)
         {
             ViewBag.ConfirmationMessage = $"Your order had been processed. Your order number number is {id}";
             return View();
         }
 
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Order order)
         {
             try
             {
-                await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
-                return RedirectToAction(nameof(OrderConfirmation));
+                var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
+                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber });
             }
             catch
             {

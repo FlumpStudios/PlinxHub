@@ -1,19 +1,15 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PlinxHub.Common.Models;
-using PlinxHub.Common.Models.Orders;
 
 namespace PlinxHub.Common.Data
 {
-    public class PlinxHubContext : DbContext
+    public class PlinxHubContext : IdentityDbContext
     {
         public PlinxHubContext(DbContextOptions<PlinxHubContext> options)
             : base(options)
         {
         }
-
-        public DbSet<Order> Order { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

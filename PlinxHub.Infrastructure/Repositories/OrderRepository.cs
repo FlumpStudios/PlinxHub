@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using PlinxHub.Common.Data;
 using PlinxHub.Common.Models.Orders;
+using PlinxHub.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +10,10 @@ namespace PlinxHub.Infrastructure.Repositories
 {
     public class OrderRepository : IDisposable, IOrderRepository
     {
-        private readonly PlinxHubContext _context;
+        private readonly ApplicationDbContext _context;
 
         public OrderRepository(
-            PlinxHubContext context)
+            ApplicationDbContext context)
         {
             _context = context;
         }

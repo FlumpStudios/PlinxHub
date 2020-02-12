@@ -3,8 +3,24 @@
 @{
     ViewData["Title"] = "Log out";
 }
-
-<header>
-    <h1>@ViewData["Title"]</h1>
-    <p>You have successfully logged out of the application.</p>
-</header>
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
+    <div class="parallax-container">
+        <div class="Services-Header shadow">
+            <h2 style="color:white">@ViewData["Title"]</h2>
+            <h3 style="color:white">Bye then!</h3>
+        </div>
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
+    <div class="containter">
+        <div class="row">
+            <header>
+                <h1>@ViewData["Title"]</h1>
+                <p>You have successfully logged out of the application.</p>
+            </header>
+        </div>
+    </div>
+           
+    <div class="parallax-container">
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
+}

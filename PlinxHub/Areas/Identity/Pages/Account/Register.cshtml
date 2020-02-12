@@ -4,20 +4,8 @@
     ViewData["Title"] = "Register";
 }
 
-<html>
-<head>
-    <!--Import Google Icon Font-->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!--Import materialize.css-->
-    <link type="text/css" rel="stylesheet" href="~/css/materialize.css" media="screen,projection" />
-    <link type="text/css" rel="stylesheet" href="~/css/MainCSS.css" media="screen,projection" />
-    <link type="text/css" rel="stylesheet" href="~/css/animate.css" media="screen,projection" />
-    <script src="https://kit.fontawesome.com/099799cc9c.js" crossorigin="anonymous"></script>
-    <!-- <link type="text/css" rel="stylesheet" href="~/Content/css/style.css" media="screen,projection" /> -->
-    <!--Let browser know website is optimized for mobile-->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body>
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
+
     <div class="parallax-container">
         <div class="Services-Header shadow">
             <h2 style="color:white">@ViewData["Title"]</h2>
@@ -26,8 +14,6 @@
         <div class="parallax"><img src="~/Content/Images/login/handshake.jpg"></div>
     </div>
     <div class="container">
-        <h1>@ViewData["Title"]</h1>
-
         <div class="row">
             <div class="col m4">
                 <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
@@ -98,34 +84,22 @@
     </div>
     <div class="parallax-container">
         <div class="parallax"><img src="~/Content/Images/login/handshake.jpg"></div>
-    </div>
-    <partial name="Footer" />
-</body>
-</html>
+    </div>    
+    }
 
-<!--Import jQuery before materialize.js-->
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="~/Scripts/indexScript.js"></script>
-<script src="~/Scripts/jquery.textillate.js"></script>
-<script src="~/Scripts/jquery.lettering.js"></script>
-<script src="~/Scripts/jquery.fittext.js"></script>
-<script src="~/js/materialize.js"></script>
-<script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js"></script>
-<script src="~/js/materialize.min.js"></script>
-<script type="text/javascript" src="~js/materialize.min.js"></script>
-<script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
-<style>
-@@media only screen and (min-width: 1475px) {
-   .social-buttons {
-        width: 50%
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
     }
-}  
-@@media only screen and (max-width: 1475px) {
-   .social-buttons {
-        width: 100%
-    }
-}  
-</style>
+    <style>
+        @@media only screen and (min-width: 1475px) {
+            .social-buttons {
+                width: 50%
+            }
+        }
+
+        @@media only screen and (max-width: 1475px) {
+            .social-buttons {
+                width: 100%
+            }
+        }
+    </style>

@@ -3,8 +3,29 @@
 @{
     ViewData["Title"] = "Access denied";
 }
+@{ Layout = "~/Views/Shared/_Layout.cshtml";
 
-<header>
-    <h1 class="text-danger">@ViewData["Title"]</h1>
-    <p class="text-danger">You do not have access to this resource.</p>
-</header>
+    <div class="parallax-container">
+        <div class="Services-Header shadow">
+            <h2 style="color:white">@ViewData["Title"]</h2>
+            <h3 style="color:white">hmmm, you appear to be somewhere you shouldn't be!</h3>
+        </div>
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
+    <div class="containter">
+        <div class="row">
+            <header>
+                <br />
+                <br />
+                <br />
+                <p class="text-danger">You do not have access to this resource.</p>
+                <br />
+                <br />
+                <br />
+            </header>
+        </div>
+    </div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="~/Content/Images/login/stairs.jpg"></div>
+    </div>
+}
