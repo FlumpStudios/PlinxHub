@@ -18,7 +18,6 @@ namespace PlinxHub.Service.Tests
     {
         private MockRepository _mockRepository;
         private Mock<IOrderRepository> _mockOrderRepository;
-
         
 
         [TestInitialize]

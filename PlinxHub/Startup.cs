@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using PlinxHub.Infrastructure.Data;
 using PlinxHub.Infrastructure.Repositories;
 using PlinxHub.Ioc.Config;
 using PlinxHub.Service;
+using PlinxHub.Common.Data;
 
 namespace PlinxHub
 {
@@ -19,6 +21,8 @@ namespace PlinxHub
         public IConfiguration Configuration { get; }
 
         private AppSecrets _secrets;
+        
+        private AppSettings _settings;
 
         public Startup(IConfiguration configuration)
         {
@@ -28,15 +32,37 @@ namespace PlinxHub
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var secrets = Configuration;
+            services.Configure<AppSecrets>(Configuration);
+            services.Configure<AppSettings>(Configuration);
 
-            services.Configure<AppSecrets>(secrets);
-            _secrets = secrets.Get<AppSecrets>();
+            _secrets = Configuration.Get<AppSecrets>();
+            _settings = Configuration.Get<AppSettings>();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            if (_settings.UseInMemDB)
+            {
+                services.AddDbContext<PlinxHubContext>(options =>
+                    options.UseInMemoryDatabase(databaseName:"Identity"));
+                    
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseInMemoryDatabase(databaseName: "PlinxHubDB"));
+
+            }
+            else
+            {
+                services.AddDbContext<ApplicationDbContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("DefaultConnection")));
+
+                services.AddDbContext<PlinxHubContext>(options =>
+                    options.UseSqlServer(
+                        Configuration.GetConnectionString("DefaultConnection")));
+            }
+
+            services.AddDefaultIdentity<IdentityUser>()
+                        .AddEntityFrameworkStores<PlinxHubContext>();
+
             services.AddControllersWithViews();
+            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential 
@@ -46,17 +72,21 @@ namespace PlinxHub
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddRazorPages();
-            services.AddAuthentication().AddFacebook(facebookOptions =>
+
+            if(_settings.EnableSocialLogins)
             {
-                facebookOptions.AppId =_secrets.Authentication.Facebook.AppID;
-                facebookOptions.AppSecret = _secrets.Authentication.Facebook.AppSecret;
-            }).AddTwitter(o => {
-                o.ConsumerKey = _secrets.Authentication.Twitter.AppID;
-                o.ConsumerSecret = _secrets.Authentication.Twitter.AppSecret;
-            }).AddLinkedIn(o => {
-                o.ClientId = _secrets.Authentication.LinkedIn.AppID;
-                o.ClientSecret = _secrets.Authentication.LinkedIn.AppID;
-            });
+                services.AddAuthentication().AddFacebook(facebookOptions =>
+                {
+                    facebookOptions.AppId =_secrets.Authentication.Facebook.AppID;
+                    facebookOptions.AppSecret = _secrets.Authentication.Facebook.AppSecret;
+                }).AddTwitter(o => {
+                    o.ConsumerKey = _secrets.Authentication.Twitter.AppID;
+                    o.ConsumerSecret = _secrets.Authentication.Twitter.AppSecret;
+                }).AddLinkedIn(o => {
+                    o.ClientId = _secrets.Authentication.LinkedIn.AppID;
+                    o.ClientSecret = _secrets.Authentication.LinkedIn.AppID;
+                });
+            }
 
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
