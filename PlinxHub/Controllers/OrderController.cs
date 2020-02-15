@@ -5,11 +5,11 @@ using PlinxHub.Service;
 using dm = PlinxHub.Common.Models.Orders;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-
+using System.Security.Claims;
 namespace PlinxHub.API.Controllers
 {
     public class OrderController : Controller
-    {
+    {        
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
@@ -39,7 +39,9 @@ namespace PlinxHub.API.Controllers
         public async Task<ActionResult> Create(Order order)
         {
             try
-            {
+            {                
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                order.UserId = new System.Guid(userId);
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber });
             }

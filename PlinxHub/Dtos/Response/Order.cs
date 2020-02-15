@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System;
 
 namespace PlinxHub.API.Dtos.Response
 {
@@ -8,6 +8,8 @@ namespace PlinxHub.API.Dtos.Response
         [Required]
         [MaxLength(50)]
         public string CompanyName { get; set; }
+
+        public Guid UserId { get; set; }
 
         [Required]
         [MaxLength(50)]
