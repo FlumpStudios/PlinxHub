@@ -2,6 +2,9 @@
 @inject SignInManager<IdentityUser> SignInManager
 @inject UserManager<IdentityUser> UserManager
 
+    <li>
+        <strong> @Html.ActionLink("Order Now", "Index", "Order")</strong>
+    </li>
 
     @if (SignInManager.IsSignedIn(User))
         {
@@ -14,6 +17,7 @@
         </form>
     </li>
         }
+
 
 @if (!SignInManager.IsSignedIn(User))
 {
