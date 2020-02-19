@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using PlinxHub.Common.Data;
 using PlinxHub.Common.Models.Orders;
 using PlinxHub.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace PlinxHub.Infrastructure.Repositories
@@ -28,6 +28,11 @@ namespace PlinxHub.Infrastructure.Repositories
                 .AsNoTracking()
                 .SingleAsync(
                     x => x.OrderNumber == id);
+
+        public async Task<IEnumerable<Order>> GetByUser(Guid UserID) =>
+            await _context.Order
+            .Where(x => x.UserId == UserID)
+            .ToListAsync();
 
         public void Update(Order order) =>
             _context.Entry(order).State = EntityState.Modified;

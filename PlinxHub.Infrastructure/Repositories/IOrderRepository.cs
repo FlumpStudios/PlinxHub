@@ -1,4 +1,5 @@
-﻿using PlinxHub.Common.Models.Orders;
+﻿using System;
+using PlinxHub.Common.Models.Orders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -9,6 +10,7 @@ namespace PlinxHub.Infrastructure.Repositories
         void Delete(int id);
         void Dispose();
         Task<IEnumerable<Order>> Get();
+        Task<IEnumerable<Order>> GetByUser(Guid UserID);
         Task<Order> Get(int id);
         Task<bool> Exists(int id);
         Order Create(Order order);

@@ -85,6 +85,36 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
             Assert.IsTrue(expected.CompareByValue(actual));
         }
 
+        [DataRow(1)]
+        [DataRow(2)]
+        [DataTestMethod()]
+        public async Task ShouldGetOrderByUserId(int id)
+        {
+            //Arrange
+            Guid userId = _mockPlinxHubContext.Order.Find(id).UserId;
+            using var unitUnderTest = CreateOrderRepository();
+
+            //act
+            var actual = await unitUnderTest.GetByUser(userId);
+
+            //assert
+           Assert.IsTrue(actual.Count() == 2);
+        }
+
+        [TestMethod]
+        public async Task ShouldNotGetOrderByUserId()
+        {
+            //Arrange
+            Guid userId = new Guid("4666efac-8966-4390-b4e0-fa67fa3d8ffe");
+            using var unitUnderTest = CreateOrderRepository();
+
+            //act
+            var actual = await unitUnderTest.GetByUser(userId);
+
+            //assert
+            Assert.IsTrue(!actual.Any());
+        }
+
         [TestMethod()]
         public void ShouldUpdateOrderRecord()
         {
@@ -109,7 +139,8 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
                 Surname = "New Test Surname",
                 TemplateNumber = 4242,
                 Town = "new Test town",
-                UpdatedDate = new DateTime(2020, 2, 2)
+                UpdatedDate = new DateTime(2020, 2, 2),
+                UserId = new Guid("77074068-d736-4c26-acc3-4160db5e0620")
             };
 
             int countBefore = GetCount;

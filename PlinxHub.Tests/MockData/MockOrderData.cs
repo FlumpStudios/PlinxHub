@@ -26,7 +26,8 @@ namespace PlinxHub.Tests.MockData
                         Surname ="Test surname",
                         TemplateNumber = 42,
                         Town ="Test town",
-                        UpdatedDate = new DateTime(2000,1,1)
+                        UpdatedDate = new DateTime(2000,1,1),
+                        UserId = new Guid("77074068-d736-4c26-acc3-4160db5e0642")
                     },
                     new Order
                     {
@@ -46,7 +47,8 @@ namespace PlinxHub.Tests.MockData
                         Surname ="Test surname 2",
                         TemplateNumber = 43,
                         Town ="Test town 2",
-                        UpdatedDate = new DateTime(2000,2,2)
+                        UpdatedDate = new DateTime(2000,2,2),
+                        UserId = new Guid("77074068-d736-4c26-acc3-4160db5e0642")
                     }
                 };
     }

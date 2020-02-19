@@ -6,6 +6,7 @@ using PlinxHub.Tests.MockData;
 using System.Linq;
 using PlinxHub.Common.Extensions;
 using System.Threading.Tasks;
+using System;
 
 namespace PlinxHub.Service.Tests
 {
@@ -42,12 +43,43 @@ namespace PlinxHub.Service.Tests
             _mockOrderRepository.Setup(x => x.SaveAsync()).Returns(Task.FromResult<object>(null));
 
             var unitOfTest = CreateService();
-            
+
             //Act
             var actual = await unitOfTest.GenerateNewOrder(mockOrder);
 
             //Assert
             Assert.IsTrue(mockOrder.CompareByValue(actual));
+        }
+
+        [TestMethod]
+        public async Task ShouldGetOrdersByUSerId()
+        {
+            //Arrange
+            var mockOrders = MockOrderData.MockOrder;
+            var unitOfTest = CreateService();
+            Guid testUser = new Guid("bd2de918-8de3-428a-8cfc-f7345794457a");
+            _mockOrderRepository.Setup(x => x.GetByUser(It.IsAny<Guid>())).Returns(Task.FromResult(mockOrders));
+
+            //Act
+            var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
+
+            //Assert
+            Assert.IsTrue(actual.CompareByValue(mockOrders));
+        }
+
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        [TestMethod]
+        public async Task ShouldThrowArgExceptionOnEmptyUserId()
+        {
+            //Arrange
+            var unitOfTest = CreateService();
+            Guid testUser = new Guid();
+
+            //Act
+            var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
+
+            //Assert
+            /**Exception expected**/
         }
     }
 }

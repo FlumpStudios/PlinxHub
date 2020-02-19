@@ -1,15 +1,20 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PlinxHub.API.Dtos.Response;
+using vm = PlinxHub.API.Dtos;
 using AutoMapper;
 using PlinxHub.Service;
 using dm = PlinxHub.Common.Models.Orders;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using System;
+
 using System.Security.Claims;
+using System.Collections.Generic;
+
 namespace PlinxHub.API.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
-    {        
+    {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
@@ -21,10 +26,15 @@ namespace PlinxHub.API.Controllers
             _mapper = mapper;
         }
 
-        [Authorize]
+     
         public ActionResult Index()
         {
             return View();
+        }
+
+        public async Task<ActionResult> YourOrders()
+        {
+            return View(_mapper.Map<IEnumerable<vm.Response.OrderResponse>>(await _orderService.GetOrdersByUser(GetUser)));
         }
 
         public ActionResult OrderConfirmation([FromRoute]int id)
@@ -33,23 +43,26 @@ namespace PlinxHub.API.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(Order order)
+        public async Task<ActionResult> Create(vm.Request.OrderRequest order)
         {
             try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                order.UserId = new System.Guid(userId);
+                order.UserId = GetUser;
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber });
             }
-            catch
+            catch(Exception e)
             {
                 ViewBag.ErrorMessage = "Something went wrong processing your order :(";
-                return View();
+                return RedirectToAction(nameof(Index));
             }
+        }
+
+        public Guid GetUser
+        {
+            get => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }

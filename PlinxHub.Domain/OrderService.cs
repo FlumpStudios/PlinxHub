@@ -1,5 +1,7 @@
 ﻿using PlinxHub.Common.Models.Orders;
 using PlinxHub.Infrastructure.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PlinxHub.Service
@@ -17,6 +19,13 @@ namespace PlinxHub.Service
             var response = _orderRepository.Create(order);
             await _orderRepository.SaveAsync();
             return response;
+        }
+
+        public async Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId)
+        {
+            if (UserId == Guid.Empty) throw new ArgumentOutOfRangeException(nameof(UserId));
+
+            return await _orderRepository.GetByUser(UserId);
         }
     }
 }

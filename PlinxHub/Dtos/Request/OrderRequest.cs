@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace PlinxHub.API.Dtos.Response
+namespace PlinxHub.API.Dtos.Request
 {
-    public class Order
+    public class OrderRequest
     {
         [Required]
         [MaxLength(50)]
