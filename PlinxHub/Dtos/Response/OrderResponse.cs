@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System;
+﻿using System;
 
 namespace PlinxHub.API.Dtos.Response
 {

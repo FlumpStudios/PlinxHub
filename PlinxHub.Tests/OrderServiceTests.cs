@@ -35,6 +35,21 @@ namespace PlinxHub.Service.Tests
 
 
         [TestMethod()]
+        public async Task ShouldGetOrder()
+        {
+            var mockOrder = MockOrderData.MockOrder.First();
+            
+            _mockOrderRepository.Setup(x => x.Get(It.IsAny<int>())).
+                Returns(Task.FromResult(mockOrder));
+
+            var unitUnderTest = CreateService();
+
+            var actual = await unitUnderTest.GetOrder(mockOrder.OrderNumber);
+
+            Assert.IsTrue(actual.CompareByValue(mockOrder));
+        }
+
+        [TestMethod()]
         public async Task GenerateNewOrderTest()
         {
             //Arrange

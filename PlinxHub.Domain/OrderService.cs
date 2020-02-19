@@ -14,6 +14,9 @@ namespace PlinxHub.Service
             _orderRepository = orderRepository;
         }
 
+        public async Task<Order> GetOrder(int id) => 
+            await _orderRepository.Get(id);
+
         public async Task<Order> GenerateNewOrder(Order order)
         {
             var response = _orderRepository.Create(order);

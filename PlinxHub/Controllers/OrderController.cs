@@ -25,13 +25,17 @@ namespace PlinxHub.API.Controllers
             _orderService = orderService;
             _mapper = mapper;
         }
-
      
-        public ActionResult Index()
+        public async Task<ActionResult> Index([FromQuery] int orderNumber)
         {
-            return View();
+            if (orderNumber <= 0 ) return View();
+            
+            var order = await _orderService.GetOrder(orderNumber);
+
+            return View(_mapper.Map<vm.Request.OrderRequest>(order));
         }
 
+        
         public async Task<ActionResult> YourOrders()
         {
             return View(_mapper.Map<IEnumerable<vm.Response.OrderResponse>>(await _orderService.GetOrdersByUser(GetUser)));
