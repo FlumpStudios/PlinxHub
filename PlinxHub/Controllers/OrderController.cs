@@ -32,13 +32,13 @@ namespace PlinxHub.API.Controllers
             
             var order = await _orderService.GetOrder(orderNumber);
 
-            return View(_mapper.Map<vm.Request.OrderRequest>(order));
+            return View(_mapper.Map<vm.Order>(order));
         }
 
         
         public async Task<ActionResult> YourOrders()
         {
-            return View(_mapper.Map<IEnumerable<vm.Response.OrderResponse>>(await _orderService.GetOrdersByUser(GetUser)));
+            return View(_mapper.Map<IEnumerable<vm.Order>>(await _orderService.GetOrdersByUser(GetUser)));
         }
 
         public ActionResult OrderConfirmation([FromRoute]int id)
@@ -49,7 +49,7 @@ namespace PlinxHub.API.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(vm.Request.OrderRequest order)
+        public async Task<ActionResult> Create(vm.Order order)
         {
             try
             {

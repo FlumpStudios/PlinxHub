@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 
-namespace PlinxHub.API.Dtos.Request
+namespace PlinxHub.API.Dtos
 {
-    public class OrderRequest
+    public class Order
     {
+        public int OrderNumber { get; set; }
+
+
         [Required]
         [MaxLength(50)]
         public string CompanyName { get; set; }

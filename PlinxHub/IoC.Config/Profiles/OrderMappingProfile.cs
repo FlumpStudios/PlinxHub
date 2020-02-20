@@ -8,10 +8,8 @@ namespace PlinxHub.Ioc.Config.Profiles
     {
         public OrderMappingProfile()
         {
-            CreateMap<dm.Order, vm.Request.OrderRequest>();
-            CreateMap<dm.Order, vm.Request.OrderRequest>().ReverseMap();
-            CreateMap<dm.Order, vm.Response.OrderResponse>();
-            CreateMap<dm.Order, vm.Response.OrderResponse>().ReverseMap();
+            CreateMap<dm.Order, vm.Order>();
+            CreateMap<dm.Order, vm.Order>().ReverseMap();            
         }
     }
 }
