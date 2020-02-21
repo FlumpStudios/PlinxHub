@@ -30,5 +30,11 @@ namespace PlinxHub.Service
 
             return await _orderRepository.GetByUser(UserId);
         }
+
+        public async Task UpdateOrder(Order order)
+        {
+            _orderRepository.Update(order);
+            await _orderRepository.SaveAsync();
+        }
     }
 }

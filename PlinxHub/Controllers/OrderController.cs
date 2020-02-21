@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using vm = PlinxHub.API.Dtos;
+using dm = PlinxHub.Common.Models.Orders;
 using AutoMapper;
 using PlinxHub.Service;
-using dm = PlinxHub.Common.Models.Orders;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using System;
-
 using System.Security.Claims;
 using System.Collections.Generic;
 
@@ -34,20 +33,25 @@ namespace PlinxHub.API.Controllers
 
             return View(_mapper.Map<vm.Order>(order));
         }
-
         
         public async Task<ActionResult> YourOrders()
         {
             return View(_mapper.Map<IEnumerable<vm.Order>>(await _orderService.GetOrdersByUser(GetUser)));
         }
 
-        public ActionResult OrderConfirmation([FromRoute]int id)
+        public ActionResult OrderConfirmation([FromRoute]int id, [FromRoute] bool updated)
         {
-            ViewBag.ConfirmationMessage = $"Your order had been processed. Your order number number is {id}";
+            if (updated)
+            {
+                ViewBag.ConfirmationMessage = $"Order {id} has now been successfully updated.";    
+            }
+            else
+            {
+                ViewBag.ConfirmationMessage = $"Your order had been processed. Your order number number is {id}";
+            }
             return View();
         }
 
-        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(vm.Order order)
         {
@@ -55,7 +59,23 @@ namespace PlinxHub.API.Controllers
             {
                 order.UserId = GetUser;
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
-                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber });
+                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber, updated = false });
+            }
+            catch(Exception e)
+            {
+                ViewBag.ErrorMessage = "Something went wrong processing your order :(";
+                return RedirectToAction(nameof(Index));
+            }
+        }
+
+      
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Update(vm.Order order)
+        {
+            try
+            {
+                await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order));
+                return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber, updated = true });
             }
             catch(Exception e)
             {

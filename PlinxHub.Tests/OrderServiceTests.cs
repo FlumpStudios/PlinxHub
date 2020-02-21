@@ -96,5 +96,20 @@ namespace PlinxHub.Service.Tests
             //Assert
             /**Exception expected**/
         }
+
+        public async Task ShouldUpdateOrders()
+        {
+            //Arrange
+            var mockOrder = MockOrderData.MockOrder.First();
+            var unitOfTest = CreateService();
+            
+            _mockOrderRepository.Setup(x => x.Update(It.IsAny<Order>()));
+
+            //Act
+            await unitOfTest.UpdateOrder(mockOrder);
+
+            //Assert
+            //Should pass test if not exception thrown
+        }
     }
 }
