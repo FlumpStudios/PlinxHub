@@ -13,6 +13,11 @@ using PlinxHub.Infrastructure.Repositories;
 using PlinxHub.Ioc.Config;
 using PlinxHub.Service;
 using PlinxHub.Common.Data;
+using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
+using System;
 
 namespace PlinxHub
 {
@@ -87,6 +92,16 @@ namespace PlinxHub
                     o.ClientSecret = _secrets.Authentication.LinkedIn.AppID;
                 });
             }
+            
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Plinx Orders", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
 
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
@@ -116,6 +131,15 @@ namespace PlinxHub
 
             app.UseAuthentication();
             app.UseAuthorization();
+            
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Plinx Orders");
+            });
 
             app.UseEndpoints(endpoints =>
             {
