@@ -24,26 +24,29 @@ namespace PlinxHub.API.Controllers
             _orderService = orderService;
             _mapper = mapper;
         }
-     
+
         public async Task<ActionResult> Index([FromQuery] int orderNumber)
         {
             if (orderNumber <= 0 ) return View();
-            
+
             var order = await _orderService.GetOrder(orderNumber);
+
+            //Make sure the logged in user is the same user as the user in the order
+            if (!string.Equals(order.UserId, currentUser)) return StatusCode(403);
 
             return View(_mapper.Map<vm.Order>(order));
         }
-        
-        public async Task<ActionResult> YourOrders()
-        {
-            return View(_mapper.Map<IEnumerable<vm.Order>>(await _orderService.GetOrdersByUser(GetUser)));
-        }
 
-        public ActionResult OrderConfirmation([FromRoute]int id, [FromRoute] bool updated)
+        public async Task<ActionResult> YourOrders() =>
+            View(_mapper.Map<IEnumerable<vm.Order>>(
+                await _orderService.GetOrdersByUser(currentUser)));
+
+
+        public ActionResult OrderConfirmation([FromRoute]int id, [FromQuery] bool updated)
         {
             if (updated)
             {
-                ViewBag.ConfirmationMessage = $"Order {id} has now been successfully updated.";    
+                ViewBag.ConfirmationMessage = $"Order {id} has now been successfully updated.";
             }
             else
             {
@@ -57,7 +60,7 @@ namespace PlinxHub.API.Controllers
         {
             try
             {
-                order.UserId = GetUser;
+                order.UserId = currentUser;
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber, updated = false });
             }
@@ -74,8 +77,14 @@ namespace PlinxHub.API.Controllers
         {
             try
             {
-                await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order));
-                return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber, updated = true });
+                if (order.OrderNumber < 0) return BadRequest();
+
+                if (await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order)))
+                {
+                    return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber, updated = true });
+                }
+
+                return NotFound();
             }
             catch(Exception e)
             {
@@ -84,7 +93,7 @@ namespace PlinxHub.API.Controllers
             }
         }
 
-        public Guid GetUser
+        public Guid currentUser
         {
             get => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }

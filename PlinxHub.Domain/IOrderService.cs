@@ -10,6 +10,6 @@ namespace PlinxHub.Service
         Task<Order> GenerateNewOrder(Order order);
         Task<Order> GetOrder(int id);
         Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId);
-        Task UpdateOrder(Order order);
+        Task<bool> UpdateOrder(Order order);
     }
 }

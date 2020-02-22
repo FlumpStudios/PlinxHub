@@ -15,7 +15,6 @@ namespace PlinxHub.Service.Tests
     {
         private MockRepository _mockRepository;
         private Mock<IOrderRepository> _mockOrderRepository;
-        
 
         [TestInitialize]
         public void Init()
@@ -97,19 +96,38 @@ namespace PlinxHub.Service.Tests
             /**Exception expected**/
         }
 
+        [TestMethod]
         public async Task ShouldUpdateOrders()
         {
             //Arrange
             var mockOrder = MockOrderData.MockOrder.First();
             var unitOfTest = CreateService();
-            
+
+            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<int>())).Returns(Task.FromResult(true));
             _mockOrderRepository.Setup(x => x.Update(It.IsAny<Order>()));
+            _mockOrderRepository.Setup(x => x.SaveAsync()).Returns(() => Task.Run(() => { })).Verifiable();
 
             //Act
-            await unitOfTest.UpdateOrder(mockOrder);
+            var actual = await unitOfTest.UpdateOrder(mockOrder);
 
             //Assert
-            //Should pass test if not exception thrown
+            Assert.IsTrue(actual);
+        }
+
+        [TestMethod]
+        public async Task ShouldNotUpdateOrderAsDoesNotExist()
+        {
+            //Arrange
+            var mockOrder = MockOrderData.MockOrder.First();
+            var unitOfTest = CreateService();
+
+            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<int>())).Returns(Task.FromResult(false));
+
+            //Act
+            var actual = await unitOfTest.UpdateOrder(mockOrder);
+
+            //Assert
+            Assert.IsFalse(actual);
         }
     }
 }

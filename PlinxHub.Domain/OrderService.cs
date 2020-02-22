@@ -14,7 +14,7 @@ namespace PlinxHub.Service
             _orderRepository = orderRepository;
         }
 
-        public async Task<Order> GetOrder(int id) => 
+        public async Task<Order> GetOrder(int id) =>
             await _orderRepository.Get(id);
 
         public async Task<Order> GenerateNewOrder(Order order)
@@ -31,10 +31,13 @@ namespace PlinxHub.Service
             return await _orderRepository.GetByUser(UserId);
         }
 
-        public async Task UpdateOrder(Order order)
+        public async Task<bool> UpdateOrder(Order order)
         {
+            if (!await _orderRepository.Exists(order.OrderNumber)) return false;
+
             _orderRepository.Update(order);
             await _orderRepository.SaveAsync();
+            return true;
         }
     }
 }

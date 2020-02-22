@@ -26,11 +26,11 @@ namespace PlinxHub.Infrastructure.Repositories
         public async Task<Order> Get(int id) =>
             await _context.Order
                 .AsNoTracking()
-                .SingleAsync(
-                    x => x.OrderNumber == id);
+                .SingleAsync(x => x.OrderNumber == id);
 
         public async Task<IEnumerable<Order>> GetByUser(Guid UserID) =>
             await _context.Order
+            .AsNoTracking()
             .Where(x => x.UserId == UserID)
             .ToListAsync();
 
@@ -45,7 +45,8 @@ namespace PlinxHub.Infrastructure.Repositories
 
         public async Task<bool> Exists(int id) =>
             await _context.Order
-                .AnyAsync(x => x.OrderNumber == id);
+            .AsNoTracking()
+            .AnyAsync(x => x.OrderNumber == id);
 
         public void Save() =>
             _context.SaveChanges();

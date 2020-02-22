@@ -16,74 +16,89 @@
 <div class="container">
     <br />
     <br />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.OrderNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.CompanyName)
-                </th>
-                <th>
-                    Name
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddresssLine1)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Postcode)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.EmailAddress)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.TemplateNumber)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    @if (Model.Count() > 0)
+    {
+        <table class="table" style="text-align:center">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.OrderNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CompanyName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.Surname)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddresssLine1)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Postcode)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.EmailAddress)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TemplateNumber)
-                    </td>
-                    <td>
-                        @Html.ActionLink("order", "Index", new { orderNumber=item.OrderNumber })                    
-                    </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.OrderNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.CompanyName)
+                    </th>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AddresssLine1)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Postcode)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.EmailAddress)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.TemplateNumber)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.OrderNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)  @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddresssLine1)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Postcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TemplateNumber)
+                        </td>
+                        <td>
+                            <span class="btn">@Html.ActionLink("Update Order", "Index", new { orderNumber = item.OrderNumber }, new { @class = "button" })</span>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <h5 class="center-align">Looks like you don't have any orders. Click @Html.ActionLink("here", "index", "order") to make your first order</h5>
+    }
     <br />
     <br />
 </div>
 <div class="parallax-container">
     <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
 </div>
+<style>
+    .button {
+        color:white !important;
+    }
+    td, th {
+        text-align: center
+    }
+</style>

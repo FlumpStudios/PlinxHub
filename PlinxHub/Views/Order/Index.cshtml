@@ -93,8 +93,10 @@
                         <h5 style="color:red"> @ViewBag.ErrorMessage</h5>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="@(isEdit ? "Update" : "Create")" class="btn btn-primary" />              
+                        <input type="submit" value="@(isEdit ? "Update" : "Create")" class="btn btn-primary" />
                     </div>
+                    @Html.HiddenFor(x => x.UserId)
+                    @Html.HiddenFor(x => x.OrderNumber)
                 </div>
             </form>
         </div>
