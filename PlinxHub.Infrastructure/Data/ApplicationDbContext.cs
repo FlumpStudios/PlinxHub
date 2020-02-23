@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using PlinxHub.Common.Models;
+using PlinxHub.Common.Models.ApiKeys;
 using PlinxHub.Common.Models.Orders;
 
 
@@ -16,5 +16,7 @@ namespace PlinxHub.Infrastructure.Data
         {
         } 
         public DbSet<Order> Order { get; set; }
+
+        public DbSet<ApiKey> ApiKey { get; set; }
     }
 }

@@ -13,7 +13,7 @@ using PlinxHub.Infrastructure.Repositories;
 using PlinxHub.Ioc.Config;
 using PlinxHub.Service;
 using PlinxHub.Common.Data;
-using Swashbuckle.AspNetCore.Swagger;
+using PlinxHub.MiddleWare;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
@@ -21,20 +21,34 @@ using System;
 
 namespace PlinxHub
 {
+    /// <summary>
+    /// startup class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// Config prop
+        /// </summary>
+        /// <value></value>
         public IConfiguration Configuration { get; }
 
         private AppSecrets _secrets;
         
         private AppSettings _settings;
 
+        /// <summary>
+        /// Startup method
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// Configure services method
+        /// </summary>
+        /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AppSecrets>(Configuration);
@@ -105,11 +119,16 @@ namespace PlinxHub
 
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
+            services.AddTransient<IApiService, ApiService>();
             MapperConfiguration config = MapperConfig.Get();
             services.AddSingleton<IMapper>(new Mapper(config));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// Configure method
+        /// </summary>
+        /// <param name="app"></param>
+        /// <param name="env"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -126,6 +145,7 @@ namespace PlinxHub
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
+            app.ApplyUserKeyValidation();
 
             app.UseRouting();
 

@@ -12,6 +12,9 @@ using PlinxHub.Service;
 
 namespace PlinxHub.API.ApiController
 {
+    /// <summary>
+    /// Order api controller
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class OrderController : ControllerBase
@@ -20,6 +23,11 @@ namespace PlinxHub.API.ApiController
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
+        /// <summary>
+        /// Order api controller constructor method
+        /// </summary>
+        /// <param name="orderService"></param>
+        /// <param name="mapper"></param>
         public OrderController(
             IOrderService orderService,
             IMapper mapper)

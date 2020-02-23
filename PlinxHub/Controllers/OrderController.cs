@@ -11,12 +11,20 @@ using System.Collections.Generic;
 
 namespace PlinxHub.API.Controllers
 {
+    /// <summary>
+    /// Controller for customer orders
+    /// </summary>
     [Authorize]
     public class OrderController : Controller
     {
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
 
+    /// <summary>
+    /// Constructor for the order controller 
+    /// </summary>
+    /// <param name="orderService"></param>
+    /// <param name="mapper"></param>
         public OrderController(
             IOrderService orderService,
             IMapper mapper)
@@ -25,6 +33,11 @@ namespace PlinxHub.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Index view action for orders
+        /// </summary>
+        /// <param name="orderNumber"></param>
+        /// <returns></returns>
         public async Task<ActionResult> Index([FromQuery] int orderNumber)
         {
             if (orderNumber <= 0 ) return View();
@@ -37,11 +50,21 @@ namespace PlinxHub.API.Controllers
             return View(_mapper.Map<vm.Order>(order));
         }
 
+        /// <summary>
+        /// View action for the list of users orders
+        /// </summary>
+        /// <returns></returns>
         public async Task<ActionResult> YourOrders() =>
             View(_mapper.Map<IEnumerable<vm.Order>>(
                 await _orderService.GetOrdersByUser(currentUser)));
 
 
+        /// <summary>
+        /// View action for the orders list view
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="updated"></param>
+        /// <returns></returns>
         public ActionResult OrderConfirmation([FromRoute]int id, [FromQuery] bool updated)
         {
             if (updated)
@@ -55,6 +78,11 @@ namespace PlinxHub.API.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Post action to create a new order
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(vm.Order order)
         {
@@ -64,14 +92,18 @@ namespace PlinxHub.API.Controllers
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber, updated = false });
             }
-            catch(Exception e)
+            catch
             {
                 ViewBag.ErrorMessage = "Something went wrong processing your order :(";
                 return RedirectToAction(nameof(Index));
             }
         }
-
       
+        /// <summary>
+        /// Post action to update a current record
+        /// </summary>
+        /// <param name="order"></param>
+        /// <returns></returns>
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(vm.Order order)
         {
@@ -86,14 +118,18 @@ namespace PlinxHub.API.Controllers
 
                 return NotFound();
             }
-            catch(Exception e)
+            catch
             {
                 ViewBag.ErrorMessage = "Something went wrong processing your order :(";
                 return RedirectToAction(nameof(Index));
             }
         }
 
-        public Guid currentUser
+        /// <summary>
+        /// Private getter to get the current logged in user
+        /// </summary>
+        /// <value></value>
+        private Guid currentUser
         {
             get => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
