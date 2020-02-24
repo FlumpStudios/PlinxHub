@@ -38,9 +38,9 @@ namespace PlinxHub.API.Controllers
         /// </summary>
         /// <param name="orderNumber"></param>
         /// <returns></returns>
-        public async Task<ActionResult> Index([FromQuery] int orderNumber)
+        public async Task<ActionResult> Index([FromQuery] Guid orderNumber)
         {
-            if (orderNumber <= 0 ) return View();
+            if (orderNumber == Guid.Empty ) return View();
 
             var order = await _orderService.GetOrder(orderNumber);
 
@@ -92,7 +92,7 @@ namespace PlinxHub.API.Controllers
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber, updated = false });
             }
-            catch
+            catch(Exception e)
             {
                 ViewBag.ErrorMessage = "Something went wrong processing your order :(";
                 return RedirectToAction(nameof(Index));
@@ -109,7 +109,7 @@ namespace PlinxHub.API.Controllers
         {
             try
             {
-                if (order.OrderNumber < 0) return BadRequest();
+                if (order.OrderNumber == Guid.Empty) return BadRequest();
 
                 if (await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order)))
                 {

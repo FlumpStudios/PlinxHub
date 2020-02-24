@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PlinxHub.Common.Models.ApiKeys;
 using PlinxHub.Common.Models.Orders;
 using PlinxHub.Infrastructure.Data;
 using System;
@@ -23,7 +24,7 @@ namespace PlinxHub.Infrastructure.Repositories
                 .AsNoTracking()
                 .ToListAsync();
 
-        public async Task<Order> Get(int id) =>
+        public async Task<Order> Get(Guid id) =>
             await _context.Order
                 .AsNoTracking()
                 .SingleAsync(x => x.OrderNumber == id);
@@ -34,16 +35,28 @@ namespace PlinxHub.Infrastructure.Repositories
             .Where(x => x.UserId == UserID)
             .ToListAsync();
 
+        public async Task<Order> GetByApiKey(string apiKey)
+        {
+            var k = await _context.ApiKey
+                .Include(x => x.Order)
+                .SingleOrDefaultAsync(x => x.Key == apiKey);
+
+            return k.Order;
+        }
+
         public void Update(Order order) =>
             _context.Entry(order).State = EntityState.Modified;
 
         public Order Create(Order order) =>
             _context.Order.Add(order).Entity;
 
+        public ApiKey CreateApiKey(ApiKey apiKey) =>
+            _context.ApiKey.Add(apiKey).Entity;
+
         public void Delete(int id) =>
             _context.Order.Remove(_context.Order.Find(id));
 
-        public async Task<bool> Exists(int id) =>
+        public async Task<bool> Exists(Guid id) =>
             await _context.Order
             .AsNoTracking()
             .AnyAsync(x => x.OrderNumber == id);

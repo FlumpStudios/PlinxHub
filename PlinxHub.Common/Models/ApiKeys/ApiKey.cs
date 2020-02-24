@@ -1,13 +1,17 @@
+using PlinxHub.Common.Models.Orders;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System;
+
 namespace PlinxHub.Common.Models.ApiKeys
 {
     public class ApiKey
     {
         [Key]
-        public int ApiKeyId { get; set; }
-        public string Key {get; set;}
-        public Guid UserId { get; set; }
-    }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public string Key { get; set; }
 
+        public Guid OrderNumber { get; set; }
+        public Order Order { get; set; }
+    }
 }

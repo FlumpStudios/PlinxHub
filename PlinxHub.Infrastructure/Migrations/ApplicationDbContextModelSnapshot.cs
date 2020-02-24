@@ -19,12 +19,28 @@ namespace PlinxHub.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("PlinxHub.Common.Models.ApiKeys.ApiKey", b =>
+                {
+                    b.Property<string>("Key")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<Guid>("OrderNumber")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("OrderNumber1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Key");
+
+                    b.HasIndex("OrderNumber1");
+
+                    b.ToTable("ApiKey");
+                });
+
             modelBuilder.Entity("PlinxHub.Common.Models.Orders.Order", b =>
                 {
-                    b.Property<int>("OrderNumber")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("OrderNumber")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AddresssLine1")
                         .HasColumnType("nvarchar(50)")
@@ -94,6 +110,13 @@ namespace PlinxHub.Infrastructure.Migrations
                     b.HasKey("OrderNumber");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.ApiKeys.ApiKey", b =>
+                {
+                    b.HasOne("PlinxHub.Common.Models.Orders.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderNumber1");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,12 +1,14 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PlinxHub.Common.Models.Orders
 {
     public class Order
     {
         [Key]
-        public int OrderNumber { get; set; }
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        public Guid OrderNumber { get; set; }
 
         public Guid UserId { get; set; }
 

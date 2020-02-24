@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlinxHub.Infrastructure.Migrations.PlinxHub
 {
-    public partial class Init2 : Migration
+    public partial class ident : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

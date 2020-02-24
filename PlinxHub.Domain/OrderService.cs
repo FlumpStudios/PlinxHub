@@ -1,4 +1,6 @@
-﻿using PlinxHub.Common.Models.Orders;
+﻿using PlinxHub.Common.Crypto;
+using PlinxHub.Common.Models.ApiKeys;
+using PlinxHub.Common.Models.Orders;
 using PlinxHub.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
@@ -9,17 +11,34 @@ namespace PlinxHub.Service
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        public OrderService(IOrderRepository orderRepository)
+        private readonly IApiKeyGen _apiKeyGen;
+
+        public OrderService(
+            IOrderRepository orderRepository,
+            IApiKeyGen apiKeyGen)
         {
             _orderRepository = orderRepository;
+            _apiKeyGen = apiKeyGen;
         }
 
-        public async Task<Order> GetOrder(int id) =>
+        public async Task<Order> GetOrder(Guid id) =>
             await _orderRepository.Get(id);
 
         public async Task<Order> GenerateNewOrder(Order order)
         {
+            var newOrderNumber = Guid.NewGuid();
+
+            order.OrderNumber = newOrderNumber;
+
             var response = _orderRepository.Create(order);
+            var newApiKey = new ApiKey
+            {
+                Key = _apiKeyGen.CreateNew,
+                OrderNumber = newOrderNumber
+            };
+
+            _orderRepository.CreateApiKey(newApiKey);
+
             await _orderRepository.SaveAsync();
             return response;
         }
@@ -29,6 +48,11 @@ namespace PlinxHub.Service
             if (UserId == Guid.Empty) throw new ArgumentOutOfRangeException(nameof(UserId));
 
             return await _orderRepository.GetByUser(UserId);
+        }
+
+        public async Task<Order> GetOrderByApiKey(string apiKey)
+        {
+            return await _orderRepository.GetByApiKey(apiKey);
         }
 
         public async Task<bool> UpdateOrder(Order order)
@@ -41,3 +65,4 @@ namespace PlinxHub.Service
         }
     }
 }
+

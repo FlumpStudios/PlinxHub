@@ -2,7 +2,7 @@
 @{    
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{ var isEdit = Model?.OrderNumber > 0;}
+@{ var isEdit =  Model != null && Model.OrderNumber != Guid.Empty;}
 
     <div class="parallax-container">
         <div class="About-Header shadow">

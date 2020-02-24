@@ -19,6 +19,7 @@ namespace PlinxHub.API.ApiController
     [ApiController]
     public class OrderController : ControllerBase
     {
+        const string HEADER_KEY = "api_key";
 
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
@@ -36,38 +37,28 @@ namespace PlinxHub.API.ApiController
             _mapper = mapper;
         }
 
-       /// <summary>
-       /// Get all orders
-       /// </summary>
-        [HttpGet]
-        public IEnumerable<string> Get()
+        /// <summary>
+        /// Get order details from API key
+        /// </summary>
+        [HttpGet("GetOrder")]
+        public async Task<ActionResult<vm.Order>> GetOrder()
         {
-            return new string[] { "value1", "value2" };
+            var key = GetApiKey;
+            if (string.IsNullOrEmpty(key)) return Unauthorized();
+
+            var order = await _orderService.GetOrderByApiKey(key);
+
+            if (order == null) return Unauthorized();
+
+            return _mapper.Map<vm.Order>(order);
         }
 
-        // GET: api/Order/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        private string GetApiKey
         {
-            return "value";
-        }
-
-        // POST: api/Order
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT: api/Order/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/ApiWithActions/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            get
+                {
+                    return Request.Headers[HEADER_KEY];
+                }
         }
     }
 }

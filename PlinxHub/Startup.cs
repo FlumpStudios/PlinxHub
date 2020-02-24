@@ -13,11 +13,11 @@ using PlinxHub.Infrastructure.Repositories;
 using PlinxHub.Ioc.Config;
 using PlinxHub.Service;
 using PlinxHub.Common.Data;
-using PlinxHub.MiddleWare;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
 using System;
+using PlinxHub.Common.Crypto;
 
 namespace PlinxHub
 {
@@ -119,7 +119,7 @@ namespace PlinxHub
 
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IApiService, ApiService>();
+            services.AddTransient<IApiKeyGen, ApiKeyGen>();
             MapperConfiguration config = MapperConfig.Get();
             services.AddSingleton<IMapper>(new Mapper(config));
         }
@@ -145,13 +145,11 @@ namespace PlinxHub
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.ApplyUserKeyValidation();
 
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseAuthorization();
-            
+            app.UseAuthorization();            
             app.UseSwagger();
 
             // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),

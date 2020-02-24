@@ -10,8 +10,8 @@ using PlinxHub.Common.Data;
 namespace PlinxHub.Infrastructure.Migrations.PlinxHub
 {
     [DbContext(typeof(PlinxHubContext))]
-    [Migration("20200212190412_Init2")]
-    partial class Init2
+    [Migration("20200224191449_ident")]
+    partial class ident
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

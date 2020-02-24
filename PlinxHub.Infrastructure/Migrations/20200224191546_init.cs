@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlinxHub.Infrastructure.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,8 +11,8 @@ namespace PlinxHub.Infrastructure.Migrations
                 name: "Order",
                 columns: table => new
                 {
-                    OrderNumber = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderNumber = table.Column<Guid>(nullable: false),
+                    UserId = table.Column<Guid>(nullable: false),
                     CompanyName = table.Column<string>(maxLength: 50, nullable: true),
                     FirstName = table.Column<string>(maxLength: 50, nullable: true),
                     Surname = table.Column<string>(maxLength: 50, nullable: true),
@@ -34,10 +34,37 @@ namespace PlinxHub.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Order", x => x.OrderNumber);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "ApiKey",
+                columns: table => new
+                {
+                    Key = table.Column<string>(nullable: false),
+                    OrderNumber = table.Column<Guid>(nullable: false),
+                    OrderNumber1 = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApiKey", x => x.Key);
+                    table.ForeignKey(
+                        name: "FK_ApiKey_Order_OrderNumber1",
+                        column: x => x.OrderNumber1,
+                        principalTable: "Order",
+                        principalColumn: "OrderNumber",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ApiKey_OrderNumber1",
+                table: "ApiKey",
+                column: "OrderNumber1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ApiKey");
+
             migrationBuilder.DropTable(
                 name: "Order");
         }

@@ -7,6 +7,7 @@ using System.Linq;
 using PlinxHub.Common.Extensions;
 using System.Threading.Tasks;
 using System;
+using PlinxHub.Common.Crypto;
 
 namespace PlinxHub.Service.Tests
 {
@@ -15,12 +16,15 @@ namespace PlinxHub.Service.Tests
     {
         private MockRepository _mockRepository;
         private Mock<IOrderRepository> _mockOrderRepository;
+        private Mock<IApiKeyGen> _mockApiKeyGen;
+
 
         [TestInitialize]
         public void Init()
         {
             _mockRepository = new MockRepository(MockBehavior.Strict);
             _mockOrderRepository = _mockRepository.Create<IOrderRepository>();
+            _mockApiKeyGen = _mockRepository.Create<IApiKeyGen>();
         }
 
         [TestCleanup]
@@ -30,15 +34,16 @@ namespace PlinxHub.Service.Tests
         }
 
         private OrderService CreateService() =>
-            new OrderService(_mockOrderRepository.Object);
-
+            new OrderService(
+                _mockOrderRepository.Object,
+                _mockApiKeyGen.Object);
 
         [TestMethod()]
         public async Task ShouldGetOrder()
         {
             var mockOrder = MockOrderData.MockOrder.First();
-            
-            _mockOrderRepository.Setup(x => x.Get(It.IsAny<int>())).
+
+            _mockOrderRepository.Setup(x => x.Get(It.IsAny<Guid>())).
                 Returns(Task.FromResult(mockOrder));
 
             var unitUnderTest = CreateService();
@@ -103,7 +108,7 @@ namespace PlinxHub.Service.Tests
             var mockOrder = MockOrderData.MockOrder.First();
             var unitOfTest = CreateService();
 
-            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<int>())).Returns(Task.FromResult(true));
+            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<Guid>())).Returns(Task.FromResult(true));
             _mockOrderRepository.Setup(x => x.Update(It.IsAny<Order>()));
             _mockOrderRepository.Setup(x => x.SaveAsync()).Returns(() => Task.Run(() => { })).Verifiable();
 
@@ -121,7 +126,7 @@ namespace PlinxHub.Service.Tests
             var mockOrder = MockOrderData.MockOrder.First();
             var unitOfTest = CreateService();
 
-            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<int>())).Returns(Task.FromResult(false));
+            _mockOrderRepository.Setup(x => x.Exists(It.IsAny<Guid>())).Returns(Task.FromResult(false));
 
             //Act
             var actual = await unitOfTest.UpdateOrder(mockOrder);

@@ -12,7 +12,7 @@ namespace PlinxHub.API.Dtos
         /// Order number prop
         /// </summary>
         /// <value></value>
-        public int OrderNumber { get; set; }
+        public Guid OrderNumber { get; set; }
 
         /// <summary>
         /// Company name prop
