@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<PlinxHub.API.Dtos.Order>
+@using PlinxHub.Common.Extensions;
 
-@{
+@{    
     ViewData["Title"] = "YourOrders";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -53,7 +54,7 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.OrderNumber)
+                            @item.OrderNumber.getSubString()
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.CompanyName)
@@ -77,7 +78,7 @@
                             @Html.DisplayFor(modelItem => item.TemplateNumber)
                         </td>
                         <td>
-                            <span class="btn">@Html.ActionLink("Update Order", "Index", new { orderNumber = item.OrderNumber }, new { @class = "button" })</span>
+                            <span>@Html.ActionLink("Update", "Index", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
                         </td>
                     </tr>
                 }

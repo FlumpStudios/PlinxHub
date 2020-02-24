@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using System;
 using System.Security.Claims;
 using System.Collections.Generic;
+using PlinxHub.Common.Extensions;
 
 namespace PlinxHub.API.Controllers
 {
@@ -65,7 +66,7 @@ namespace PlinxHub.API.Controllers
         /// <param name="id"></param>
         /// <param name="updated"></param>
         /// <returns></returns>
-        public ActionResult OrderConfirmation([FromRoute]int id, [FromQuery] bool updated)
+        public ActionResult OrderConfirmation([FromRoute]string id, [FromQuery] bool updated)
         {
             if (updated)
             {
@@ -73,7 +74,7 @@ namespace PlinxHub.API.Controllers
             }
             else
             {
-                ViewBag.ConfirmationMessage = $"Your order had been processed. Your order number number is {id}";
+                ViewBag.ConfirmationMessage = $"Your order had been processed. Your order number reference is {id}";
             }
             return View();
         }
@@ -90,7 +91,7 @@ namespace PlinxHub.API.Controllers
             {
                 order.UserId = currentUser;
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
-                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber, updated = false });
+                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber.getSubString(), updated = false });
             }
             catch(Exception e)
             {
@@ -113,7 +114,7 @@ namespace PlinxHub.API.Controllers
 
                 if (await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order)))
                 {
-                    return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber, updated = true });
+                    return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber.getSubString(), updated = true });
                 }
 
                 return NotFound();
