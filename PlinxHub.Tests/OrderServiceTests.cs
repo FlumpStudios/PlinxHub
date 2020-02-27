@@ -8,6 +8,10 @@ using PlinxHub.Common.Extensions;
 using System.Threading.Tasks;
 using System;
 using PlinxHub.Common.Crypto;
+using CryptoLib;
+using FiLogger.Service.Services;
+using PlinxHub.Common.Models;
+using Microsoft.Extensions.Options;
 
 namespace PlinxHub.Service.Tests
 {
@@ -17,6 +21,10 @@ namespace PlinxHub.Service.Tests
         private MockRepository _mockRepository;
         private Mock<IOrderRepository> _mockOrderRepository;
         private Mock<IApiKeyGen> _mockApiKeyGen;
+        private Mock<ICryptoManager> _mockCryptoManager;
+        private Mock<IEmailService> _mockEmailService;
+        private Mock<IEmailRepository> _mockEmailRepository;
+        private Mock<IOptions<AppSettings>> _mockAppSettings;
 
 
         [TestInitialize]
@@ -25,6 +33,10 @@ namespace PlinxHub.Service.Tests
             _mockRepository = new MockRepository(MockBehavior.Strict);
             _mockOrderRepository = _mockRepository.Create<IOrderRepository>();
             _mockApiKeyGen = _mockRepository.Create<IApiKeyGen>();
+            _mockCryptoManager = _mockRepository.Create<ICryptoManager>();
+            _mockEmailService = _mockRepository.Create<IEmailService>();
+            _mockEmailRepository = _mockRepository.Create<IEmailRepository>();
+            _mockAppSettings = _mockRepository.Create<IOptions<AppSettings>>();
         }
 
         [TestCleanup]
@@ -36,7 +48,11 @@ namespace PlinxHub.Service.Tests
         private OrderService CreateService() =>
             new OrderService(
                 _mockOrderRepository.Object,
-                _mockApiKeyGen.Object);
+                _mockApiKeyGen.Object,
+                _mockCryptoManager.Object, 
+                _mockEmailService.Object,
+                _mockEmailRepository.Object,
+                _mockAppSettings.Object);
 
         [TestMethod()]
         public async Task ShouldGetOrder()

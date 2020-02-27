@@ -11,7 +11,9 @@ namespace PlinxHub.Common.Models.ApiKeys
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public string Key { get; set; }
 
+        [ForeignKey("Order")]
         public Guid OrderNumber { get; set; }
+
         public Order Order { get; set; }
     }
 }

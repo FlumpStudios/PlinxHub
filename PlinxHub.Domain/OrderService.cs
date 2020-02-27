@@ -5,6 +5,14 @@ using PlinxHub.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using CryptoLib;
+using FiLogger.Service.Services;
+using PlinxHub.Common.Enumerations;
+using PlinxHub.Common.Models.Email;
+using SendGrid.Helpers.Mail;
+using PlinxHub.Common.Extensions;
+using PlinxHub.Common.Models;
+using Microsoft.Extensions.Options;
 
 namespace PlinxHub.Service
 {
@@ -12,13 +20,25 @@ namespace PlinxHub.Service
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IApiKeyGen _apiKeyGen;
+        private readonly ICryptoManager _cryptoManager;
+        private readonly IEmailService _emailService;
+        private readonly IEmailRepository _emailRepository;
+        private readonly IOptions<AppSettings> _appSettings;
 
         public OrderService(
             IOrderRepository orderRepository,
-            IApiKeyGen apiKeyGen)
+            IApiKeyGen apiKeyGen,
+            ICryptoManager cryptoManager,
+            IEmailService emailService,
+            IEmailRepository emailRepository,
+            IOptions<AppSettings> appSettings)
         {
             _orderRepository = orderRepository;
             _apiKeyGen = apiKeyGen;
+            _cryptoManager = cryptoManager;
+            _emailService = emailService;
+            _emailRepository = emailRepository;
+            _appSettings = appSettings;
         }
 
         public async Task<Order> GetOrder(Guid id) =>
@@ -31,15 +51,27 @@ namespace PlinxHub.Service
             order.OrderNumber = newOrderNumber;
 
             var response = _orderRepository.Create(order);
+
+            var encyptedKey = _cryptoManager.GetEncryptedValue(_apiKeyGen.CreateNew);
+
             var newApiKey = new ApiKey
             {
-                Key = _apiKeyGen.CreateNew,
+                Key = encyptedKey,
                 OrderNumber = newOrderNumber
             };
 
             _orderRepository.CreateApiKey(newApiKey);
 
             await _orderRepository.SaveAsync();
+
+            if (_appSettings.Value.Emailing.SendConfirmationEmails)
+            {
+                await SendConfirmationEmails(
+                    newOrderNumber.getSubString(),
+                    order.EmailAddress,
+                    string.Concat(order.FirstName, " ", order.Surname));
+            }
+
             return response;
         }
 
@@ -62,6 +94,42 @@ namespace PlinxHub.Service
             _orderRepository.Update(order);
             await _orderRepository.SaveAsync();
             return true;
+        }
+
+        private async Task SendConfirmationEmails(
+            string refNumber,
+            string clientEmailAddress,
+            string clientName)
+        {
+            EmailAddress clientRecip = new EmailAddress
+            {
+                Email = clientEmailAddress,
+                Name = clientName
+            };
+
+            EmailAddress BusinessRecip = new EmailAddress
+            {
+                Email = _appSettings.Value.Emailing.SenderAddress,
+                Name = _appSettings.Value.Emailing.SenderName
+            };
+
+            var clientTemplate = await _emailRepository.Get(EmailTemplateOptions.NewOrderAlert);
+            var businessTemplate = await _emailRepository.Get(EmailTemplateOptions.OrderConfirmation);
+
+            Email clientMessage = new Email
+            {
+                EmailTemplate = clientTemplate.ReplaceOrderNumber(refNumber),
+                Recipients = new List<EmailAddress>() { clientRecip }
+            };
+
+            Email buinessMessage = new Email
+            {
+                EmailTemplate = businessTemplate.ReplaceOrderNumber(refNumber),
+                Recipients = new List<EmailAddress>() { BusinessRecip }
+            };
+
+            await _emailService.Send(clientMessage);
+            await _emailService.Send(buinessMessage);
         }
     }
 }

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PlinxHub.Infrastructure.Data;
 
 namespace PlinxHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200225224205_FkeyAdded")]
+    partial class FkeyAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,38 +34,6 @@ namespace PlinxHub.Infrastructure.Migrations
                     b.HasIndex("OrderNumber");
 
                     b.ToTable("ApiKey");
-                });
-
-            modelBuilder.Entity("PlinxHub.Common.Models.Email.EmailTemplate", b =>
-                {
-                    b.Property<int>("EmailTemplatesId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Subject")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("EmailTemplatesId");
-
-                    b.ToTable("EmailTemplate");
-
-                    b.HasData(
-                        new
-                        {
-                            EmailTemplatesId = 2,
-                            Content = @"<p>Thank you very much for ordering your website through Plinx!</p>
-                            <p>Your order is being processed and we will be in contact with you shortly</p>
-                            <p>Your order reference is {{ORDER}}. If you have any questions, please do not hesitate to contact us at info@plinx-tech.co.uk",
-                            Subject = "Order confirmation"
-                        },
-                        new
-                        {
-                            EmailTemplatesId = 1,
-                            Content = "Someone has placed a new website order",
-                            Subject = "New order - {{ORDER}}"
-                        });
                 });
 
             modelBuilder.Entity("PlinxHub.Common.Models.Orders.Order", b =>

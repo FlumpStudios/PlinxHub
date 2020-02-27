@@ -18,6 +18,8 @@ using System.Reflection;
 using System.IO;
 using System;
 using PlinxHub.Common.Crypto;
+using CryptoLib;
+using FiLogger.Service.Services;
 
 namespace PlinxHub
 {
@@ -116,7 +118,12 @@ namespace PlinxHub
                 c.IncludeXmlComments(xmlPath);
             });
 
+            services.AddCryptoManager(
+               _secrets.EncryptionCipher.InputString,
+               _secrets.EncryptionCipher.Salt);
 
+            services.AddTransient<IEmailRepository, EmailRepository>();
+            services.AddTransient<IEmailService, EmailService>();
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IOrderService, OrderService>();
             services.AddTransient<IApiKeyGen, ApiKeyGen>();

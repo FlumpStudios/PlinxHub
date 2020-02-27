@@ -3,6 +3,9 @@
     public class AppSecrets
     {
         public Authentication Authentication { get; set; }
+        public EncryptionCipher EncryptionCipher { get; set; }
+
+        public string SendGridApiKey { get; set; }
     }
     public class Authentication
     {
@@ -15,5 +18,12 @@
     {
         public string AppID { get; set; }
         public string AppSecret { get; set; }
+    }
+
+    public class EncryptionCipher
+    {
+        public string InputString { get; set; }
+
+        public string Salt { get; set; }
     }
 }

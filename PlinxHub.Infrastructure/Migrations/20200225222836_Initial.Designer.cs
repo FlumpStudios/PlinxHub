@@ -10,8 +10,8 @@ using PlinxHub.Infrastructure.Data;
 namespace PlinxHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200224191546_init")]
-    partial class init
+    [Migration("20200225222836_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,12 +29,7 @@ namespace PlinxHub.Infrastructure.Migrations
                     b.Property<Guid>("OrderNumber")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("OrderNumber1")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Key");
-
-                    b.HasIndex("OrderNumber1");
 
                     b.ToTable("ApiKey");
                 });
@@ -112,13 +107,6 @@ namespace PlinxHub.Infrastructure.Migrations
                     b.HasKey("OrderNumber");
 
                     b.ToTable("Order");
-                });
-
-            modelBuilder.Entity("PlinxHub.Common.Models.ApiKeys.ApiKey", b =>
-                {
-                    b.HasOne("PlinxHub.Common.Models.Orders.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderNumber1");
                 });
 #pragma warning restore 612, 618
         }

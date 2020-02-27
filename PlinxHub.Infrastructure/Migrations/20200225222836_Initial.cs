@@ -3,10 +3,22 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PlinxHub.Infrastructure.Migrations
 {
-    public partial class init : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ApiKey",
+                columns: table => new
+                {
+                    Key = table.Column<string>(nullable: false),
+                    OrderNumber = table.Column<Guid>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ApiKey", x => x.Key);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Order",
                 columns: table => new
@@ -34,30 +46,6 @@ namespace PlinxHub.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Order", x => x.OrderNumber);
                 });
-
-            migrationBuilder.CreateTable(
-                name: "ApiKey",
-                columns: table => new
-                {
-                    Key = table.Column<string>(nullable: false),
-                    OrderNumber = table.Column<Guid>(nullable: false),
-                    OrderNumber1 = table.Column<Guid>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApiKey", x => x.Key);
-                    table.ForeignKey(
-                        name: "FK_ApiKey_Order_OrderNumber1",
-                        column: x => x.OrderNumber1,
-                        principalTable: "Order",
-                        principalColumn: "OrderNumber",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ApiKey_OrderNumber1",
-                table: "ApiKey",
-                column: "OrderNumber1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

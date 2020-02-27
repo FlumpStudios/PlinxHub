@@ -35,14 +35,12 @@ namespace PlinxHub.Infrastructure.Repositories
             .Where(x => x.UserId == UserID)
             .ToListAsync();
 
-        public async Task<Order> GetByApiKey(string apiKey)
-        {
-            var k = await _context.ApiKey
-                .Include(x => x.Order)
-                .SingleOrDefaultAsync(x => x.Key == apiKey);
-
-            return k.Order;
-        }
+        public async Task<Order> GetByApiKey(string apiKey) =>
+           await _context.ApiKey
+            .Where(x => x.Key == apiKey)
+            .Select(x =>  x.Order)
+            .SingleAsync();
+        
 
         public void Update(Order order) =>
             _context.Entry(order).State = EntityState.Modified;
