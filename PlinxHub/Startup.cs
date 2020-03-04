@@ -20,6 +20,7 @@ using System;
 using PlinxHub.Common.Crypto;
 using CryptoLib;
 using FiLogger.Service.Services;
+using System.Threading.Tasks;
 
 namespace PlinxHub
 {
@@ -79,8 +80,9 @@ namespace PlinxHub
                         Configuration.GetConnectionString("DefaultConnection")));
             }
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<PlinxHubContext>();
+                      
 
             services.AddControllersWithViews();
             
@@ -136,8 +138,10 @@ namespace PlinxHub
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+    /// /// <param name="serviceProvider"></param>
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+          
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -173,6 +177,45 @@ namespace PlinxHub
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            CreateRoles(serviceProvider).GetAwaiter().GetResult();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            //initializing custom roles 
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            IdentityResult roleResult;
+
+            foreach (var roleName in _secrets.Authorisation.Roles)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    //create the roles and seed them to the database: Question 1
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+
+            var suEmail = _secrets.Authorisation.SuperUser.Email;
+            var suPwd = _secrets.Authorisation.SuperUser.Password;
+
+            var poweruser = new IdentityUser
+            {
+                Email = suEmail
+            };
+
+            var _user = await UserManager.FindByEmailAsync(suEmail);
+
+            if (_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(poweruser, suPwd);
+                if (createPowerUser.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(poweruser, "Admin");
+                }
+            }
         }
     }
 }

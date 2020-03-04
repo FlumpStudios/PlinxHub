@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Net.Mail;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PlinxHub.Common.Models;
@@ -35,7 +36,7 @@ namespace PlinxHub.Controllers
         /// <summary>
         /// View action for the privacy policy
         /// </summary>
-        /// <returns></returns>
+        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();

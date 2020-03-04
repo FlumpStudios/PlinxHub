@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using vm = PlinxHub.API.Dtos;
-using dm = PlinxHub.Common.Models.Orders;
+using dm = PlinxHub.Common.Models;
 
 namespace PlinxHub.Ioc.Config.Profiles
 {
@@ -14,8 +14,11 @@ namespace PlinxHub.Ioc.Config.Profiles
         /// </summary>
         public OrderMappingProfile()
         {
-            CreateMap<dm.Order, vm.Order>();
-            CreateMap<dm.Order, vm.Order>().ReverseMap();            
+            CreateMap<dm.Orders.Order, vm.Order>();
+            CreateMap<dm.Orders.Order, vm.Order>().ReverseMap();
+
+            CreateMap<dm.Filters.OrderFilters, vm.OrderFilters>();
+            CreateMap<dm.Filters.OrderFilters, vm.OrderFilters>().ReverseMap();
         }
     }
 }

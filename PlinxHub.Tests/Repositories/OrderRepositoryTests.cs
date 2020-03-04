@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using PlinxHub.Tests.MockData;
 using PlinxHub.Infrastructure.Data;
+using PlinxHub.Common.Models.Filters;
 
 namespace PlinxHub.Infrastructure.Repositories.Tests
 {
@@ -64,7 +65,7 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
             var unitUnderTest = CreateOrderRepository();
 
             //Act
-            var actual = await unitUnderTest.Get();
+            var actual = await unitUnderTest.Get(new OrderFilters());
             var expected = MockOrderData.MockOrder;
 
             Assert.IsTrue(expected.CompareByValue(actual));

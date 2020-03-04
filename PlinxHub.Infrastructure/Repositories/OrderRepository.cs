@@ -1,16 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using PlinxHub.Common.Extensions;
 using PlinxHub.Common.Models.ApiKeys;
+using PlinxHub.Common.Models.Filters;
 using PlinxHub.Common.Models.Orders;
 using PlinxHub.Infrastructure.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 
 namespace PlinxHub.Infrastructure.Repositories
 {
     public class OrderRepository : IDisposable, IOrderRepository
     {
+        /// <summary>
+        /// Defualt take count for order
+        /// </summary>
+        /// TODO: Move to app settings
+        const int DEFAULT_TAKE_COUNT = 20;
+
         private readonly ApplicationDbContext _context;
 
         public OrderRepository(
@@ -19,9 +28,17 @@ namespace PlinxHub.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Order>> Get() =>
+        public async Task<IEnumerable<Order>> Get(OrderFilters filters) =>
             await _context.Order
                 .AsNoTracking()
+                .Where(x => x.OrderNumber.ToString().Contains(filters.OrderNumber.NullToEmpty()))
+                .Where(x => x.CompanyName.Contains(filters.CompanyName.NullToEmpty()))
+                .Where(x => string.Concat(x.FirstName, x.Surname).Contains(filters.Name.NullToEmpty().RemoveWhiteSpace()))
+                .Where(x => x.TemplateNumber == filters.TemplateNumber || filters.TemplateNumber == 0)
+                .Where(x => x.EmailAddress.Contains(filters.EmailAddress.NullToEmpty()))
+                .OrderBy(string.Concat(filters.OrderBy ?? nameof(Order.CreatedDate), " ", filters.Decending ? "descending" : string.Empty))
+                .Skip(filters.Skip)
+                .Take(filters.Take > 0 ? filters.Take : DEFAULT_TAKE_COUNT)
                 .ToListAsync();
 
         public async Task<Order> Get(Guid id) =>

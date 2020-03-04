@@ -1,11 +1,13 @@
-﻿namespace PlinxHub.Common.Models
+﻿using System.Collections.Generic;
+
+namespace PlinxHub.Common.Models
 {
     public class AppSecrets
     {
         public Authentication Authentication { get; set; }
         public EncryptionCipher EncryptionCipher { get; set; }
-
         public string SendGridApiKey { get; set; }
+        public Authorisation Authorisation { get; set; }
     }
     public class Authentication
     {
@@ -25,5 +27,18 @@
         public string InputString { get; set; }
 
         public string Salt { get; set; }
+    }
+
+    public class Authorisation
+    {
+        public IEnumerable<string> Roles { get; set; }
+        public SuperUser SuperUser { get; set; }
+    }
+
+    public class SuperUser
+    {
+        public string Email { get; set; }
+
+        public string Password { get; set; }
     }
 }

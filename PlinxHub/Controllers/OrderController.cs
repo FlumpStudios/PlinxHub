@@ -54,7 +54,6 @@ namespace PlinxHub.API.Controllers
         /// <summary>
         /// View action for the list of users orders
         /// </summary>
-        /// <returns></returns>
         public async Task<ActionResult> YourOrders() =>
             View(_mapper.Map<IEnumerable<vm.Order>>(
                 await _orderService.GetOrdersByUser(currentUser)));
@@ -64,8 +63,7 @@ namespace PlinxHub.API.Controllers
         /// View action for the orders list view
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="updated"></param>
-        /// <returns></returns>
+        /// <param name="updated"></param>    
         public ActionResult OrderConfirmation([FromRoute]string id, [FromQuery] bool updated)
         {
             if (updated)
@@ -91,7 +89,7 @@ namespace PlinxHub.API.Controllers
             {
                 order.UserId = currentUser;
                 var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
-                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber.getSubString(), updated = false });
+                return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber.GetSubString(), updated = false });
             }
             catch(Exception e)
             {
@@ -114,7 +112,7 @@ namespace PlinxHub.API.Controllers
 
                 if (await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order)))
                 {
-                    return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber.getSubString(), updated = true });
+                    return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber.GetSubString(), updated = true });
                 }
 
                 return NotFound();

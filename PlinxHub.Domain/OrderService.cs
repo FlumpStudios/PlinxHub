@@ -13,6 +13,7 @@ using SendGrid.Helpers.Mail;
 using PlinxHub.Common.Extensions;
 using PlinxHub.Common.Models;
 using Microsoft.Extensions.Options;
+using PlinxHub.Common.Models.Filters;
 
 namespace PlinxHub.Service
 {
@@ -41,6 +42,9 @@ namespace PlinxHub.Service
             _appSettings = appSettings;
         }
 
+        public async Task<IEnumerable<Order>> GetOrder(OrderFilters filters) =>
+            await _orderRepository.Get(filters);
+
         public async Task<Order> GetOrder(Guid id) =>
             await _orderRepository.Get(id);
 
@@ -67,7 +71,7 @@ namespace PlinxHub.Service
             if (_appSettings.Value.Emailing.SendConfirmationEmails)
             {
                 await SendConfirmationEmails(
-                    newOrderNumber.getSubString(),
+                    newOrderNumber.GetSubString(),
                     order.EmailAddress,
                     string.Concat(order.FirstName, " ", order.Surname));
             }

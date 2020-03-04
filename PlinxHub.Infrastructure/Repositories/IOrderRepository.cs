@@ -3,6 +3,7 @@ using PlinxHub.Common.Models.Orders;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using PlinxHub.Common.Models.ApiKeys;
+using PlinxHub.Common.Models.Filters;
 
 namespace PlinxHub.Infrastructure.Repositories
 {
@@ -10,7 +11,7 @@ namespace PlinxHub.Infrastructure.Repositories
     {
         void Delete(int id);
         void Dispose();
-        Task<IEnumerable<Order>> Get();
+        Task<IEnumerable<Order>> Get(OrderFilters filters);
         Task<IEnumerable<Order>> GetByUser(Guid UserID);
         Task<Order> Get(Guid id);
         Task<bool> Exists(Guid id);
