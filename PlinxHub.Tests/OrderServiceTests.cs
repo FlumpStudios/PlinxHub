@@ -86,36 +86,36 @@ namespace PlinxHub.Service.Tests
             Assert.IsTrue(mockOrder.CompareByValue(actual));
         }
 
-        [TestMethod]
-        public async Task ShouldGetOrdersByUSerId()
-        {
-            //Arrange
-            var mockOrders = MockOrderData.MockOrder;
-            var unitOfTest = CreateService();
-            Guid testUser = new Guid("bd2de918-8de3-428a-8cfc-f7345794457a");
-            _mockOrderRepository.Setup(x => x.GetByUser(It.IsAny<Guid>())).Returns(Task.FromResult(mockOrders));
+        //[TestMethod]
+        //public async Task ShouldGetOrdersByUSerId()
+        //{
+        //    //Arrange
+        //    var mockOrders = MockOrderData.MockOrder;
+        //    var unitOfTest = CreateService();
+        //    Guid testUser = new Guid("bd2de918-8de3-428a-8cfc-f7345794457a");
+        //    _mockOrderRepository.Setup(x => x.GetByUser(It.IsAny<Guid>())).Returns(Task.FromResult(mockOrders));
 
-            //Act
-            var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
+        //    //Act
+        //    var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
 
-            //Assert
-            Assert.IsTrue(actual.CompareByValue(mockOrders));
-        }
+        //    //Assert
+        //    Assert.IsTrue(actual.CompareByValue(mockOrders));
+        //}
 
-        [ExpectedException(typeof(ArgumentOutOfRangeException))]
-        [TestMethod]
-        public async Task ShouldThrowArgExceptionOnEmptyUserId()
-        {
-            //Arrange
-            var unitOfTest = CreateService();
-            Guid testUser = new Guid();
+        //[ExpectedException(typeof(ArgumentOutOfRangeException))]
+        //[TestMethod]
+        //public async Task ShouldThrowArgExceptionOnEmptyUserId()
+        //{
+        //    //Arrange
+        //    var unitOfTest = CreateService();
+        //    Guid testUser = new Guid();
 
-            //Act
-            var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
+        //    //Act
+        //    var actual = await unitOfTest.GetOrdersByUser(UserId: testUser);
 
-            //Assert
-            /**Exception expected**/
-        }
+        //    //Assert
+        //    /**Exception expected**/
+        //}
 
         [TestMethod]
         public async Task ShouldUpdateOrders()

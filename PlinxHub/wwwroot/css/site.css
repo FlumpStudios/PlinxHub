@@ -119,3 +119,10 @@ body {
             font-size: 18px;
         }
 }
+
+.footer-links a {
+    color: #ffd8a6 !important;
+}
+    .footer-links a:hover {
+        color: #ffab40 !important;
+    }

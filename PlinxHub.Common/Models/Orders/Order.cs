@@ -1,16 +1,21 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using PlinxHub.Common.Enumerations;
+using PlinxHub.Common.Contracts;
 
 namespace PlinxHub.Common.Models.Orders
 {
-    public class Order
+    public class Order : IAuditable
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid OrderNumber { get; set; }
 
         public Guid UserId { get; set; }
+
+        [ForeignKey("Status")]
+        public OrderStatus StatusId { get; set; }
 
         [MaxLength(50)]
         public string CompanyName { get; set; }
@@ -57,5 +62,7 @@ namespace PlinxHub.Common.Models.Orders
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
+
+        public Status Status { get; set; }
     }
 }

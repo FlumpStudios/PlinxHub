@@ -118,6 +118,9 @@ namespace PlinxHub.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -138,7 +141,54 @@ namespace PlinxHub.Infrastructure.Migrations
 
                     b.HasKey("OrderNumber");
 
+                    b.HasIndex("StatusId");
+
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.Orders.Status", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            Name = "Processing Order"
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            Name = "In Build"
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            Name = "Ready"
+                        },
+                        new
+                        {
+                            StatusId = 4,
+                            Name = "Live"
+                        },
+                        new
+                        {
+                            StatusId = 6,
+                            Name = "Cancelled"
+                        },
+                        new
+                        {
+                            StatusId = 8,
+                            Name = "On Hold"
+                        });
                 });
 
             modelBuilder.Entity("PlinxHub.Common.Models.ApiKeys.ApiKey", b =>
@@ -146,6 +196,15 @@ namespace PlinxHub.Infrastructure.Migrations
                     b.HasOne("PlinxHub.Common.Models.Orders.Order", "Order")
                         .WithMany()
                         .HasForeignKey("OrderNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.Orders.Order", b =>
+                {
+                    b.HasOne("PlinxHub.Common.Models.Orders.Status", "Status")
+                        .WithMany("Order")
+                        .HasForeignKey("StatusId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

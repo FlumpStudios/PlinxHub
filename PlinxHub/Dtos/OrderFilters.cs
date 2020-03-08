@@ -1,15 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PlinxHub.API.Dtos
+﻿namespace PlinxHub.API.Dtos
 {
     /// <summary>
     /// DTO for order filters
     /// </summary>
     public class OrderFilters
     {
+        /// <summary>
+        /// order filters DTO constructor
+        /// </summary>
+        public OrderFilters()
+        {
+            if (TemplateNumber == 0) TemplateNumber = null;
+            OrderBy = "CreatedDate descending";
+        }
+
+        /// <summary>
+        /// StatusId filter prop
+        /// </summary>
+        public int StatusId { get; set; }
+
+
         /// <summary>
         /// Order by filter prop
         /// </summary>
@@ -43,7 +53,7 @@ namespace PlinxHub.API.Dtos
         /// <summary>
         /// Template Number filter prop
         /// </summary>
-        public int TemplateNumber { get; set; }
+        public int? TemplateNumber { get; set; }
 
         /// <summary>
         /// Skup Number filter prop

@@ -12,7 +12,7 @@ namespace PlinxHub.Infrastructure.Repositories
         void Delete(int id);
         void Dispose();
         Task<IEnumerable<Order>> Get(OrderFilters filters);
-        Task<IEnumerable<Order>> GetByUser(Guid UserID);
+        Task<IEnumerable<Order>> GetByUser(Guid UserID, OrderFilters filters);
         Task<Order> Get(Guid id);
         Task<bool> Exists(Guid id);
         Order Create(Order order);

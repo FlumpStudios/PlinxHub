@@ -79,11 +79,13 @@ namespace PlinxHub.Service
             return response;
         }
 
-        public async Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId)
+        public async Task<IEnumerable<Order>> GetOrdersByUser(
+            Guid UserId,
+            OrderFilters filters)
         {
             if (UserId == Guid.Empty) throw new ArgumentOutOfRangeException(nameof(UserId));
 
-            return await _orderRepository.GetByUser(UserId);
+            return await _orderRepository.GetByUser(UserId, filters);
         }
 
         public async Task<Order> GetOrderByApiKey(string apiKey)

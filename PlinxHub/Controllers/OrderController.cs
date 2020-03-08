@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using vm = PlinxHub.API.Dtos;
-using dm = PlinxHub.Common.Models.Orders;
+using dm = PlinxHub.Common.Models;
 using AutoMapper;
 using PlinxHub.Service;
 using System.Threading.Tasks;
@@ -46,7 +46,7 @@ namespace PlinxHub.API.Controllers
             var order = await _orderService.GetOrder(orderNumber);
 
             //Make sure the logged in user is the same user as the user in the order
-            if (!string.Equals(order.UserId, currentUser)) return StatusCode(403);
+            if (!CanAccessRecords(order.UserId)) return StatusCode(403);
 
             return View(_mapper.Map<vm.Order>(order));
         }
@@ -54,9 +54,18 @@ namespace PlinxHub.API.Controllers
         /// <summary>
         /// View action for the list of users orders
         /// </summary>
-        public async Task<ActionResult> YourOrders() =>
-            View(_mapper.Map<IEnumerable<vm.Order>>(
-                await _orderService.GetOrdersByUser(currentUser)));
+        public async Task<ActionResult> YourOrders(vm.OrderFilters filters)
+        {
+            var f = _mapper.Map<dm.Filters.OrderFilters>(filters);
+
+            var response = new vm.OrderWithFilters
+            {
+                Order = _mapper.Map<IEnumerable<vm.Order>>(await _orderService.GetOrdersByUser(CurrentUser,f)),
+                Filters = filters
+            };
+
+            return View(response);
+        }
 
 
         /// <summary>
@@ -87,8 +96,8 @@ namespace PlinxHub.API.Controllers
         {
             try
             {
-                order.UserId = currentUser;
-                var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Order>(order));
+                order.UserId = CurrentUser;
+                var response = await _orderService.GenerateNewOrder(_mapper.Map<dm.Orders.Order>(order));
                 return RedirectToAction(nameof(OrderConfirmation), new { id = response.OrderNumber.GetSubString(), updated = false });
             }
             catch(Exception e)
@@ -101,16 +110,18 @@ namespace PlinxHub.API.Controllers
         /// <summary>
         /// Post action to update a current record
         /// </summary>
-        /// <param name="order"></param>
-        /// <returns></returns>
+        /// <param name="order"></param> 
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Update(vm.Order order)
         {
             try
             {
                 if (order.OrderNumber == Guid.Empty) return BadRequest();
+                
+                //Make sure the logged in user is the same user as the user in the order
+                if (!CanAccessRecords(order.UserId)) return StatusCode(403);
 
-                if (await _orderService.UpdateOrder(_mapper.Map<dm.Order>(order)))
+                if (await _orderService.UpdateOrder(_mapper.Map<dm.Orders.Order>(order)))
                 {
                     return RedirectToAction(nameof(OrderConfirmation), new { id = order.OrderNumber.GetSubString(), updated = true });
                 }
@@ -125,12 +136,22 @@ namespace PlinxHub.API.Controllers
         }
 
         /// <summary>
-        /// Private getter to get the current logged in user
+        /// Check if user is allowed to access records
         /// </summary>
-        /// <value></value>
-        private Guid currentUser
-        {
-            get => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
-        }
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        private bool CanAccessRecords(Guid userId) =>   
+            Equals(userId, CurrentUser) || IsAdmin;
+
+
+        /// <summary>
+        /// Private getter to get the current logged in user
+        /// </summary>     
+        private Guid CurrentUser => new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
+
+        /// <summary>
+        /// Check if user has admin rights
+        /// </summary>
+        private bool IsAdmin => User.IsInRole("Admin");
     }
 }

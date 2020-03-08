@@ -6,6 +6,7 @@ namespace PlinxHub.Common.Models.Filters
 {
     public class OrderFilters
     {
+        public int StatusId { get; set; }
         public string OrderBy { get; set; }
         public string OrderNumber { get; set; }
         public string CompanyName { get; set; }

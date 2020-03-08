@@ -10,7 +10,7 @@ using PlinxHub.Infrastructure.Data;
 namespace PlinxHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200225222836_Initial")]
+    [Migration("20200307173917_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,41 @@ namespace PlinxHub.Infrastructure.Migrations
 
                     b.HasKey("Key");
 
+                    b.HasIndex("OrderNumber");
+
                     b.ToTable("ApiKey");
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.Email.EmailTemplate", b =>
+                {
+                    b.Property<int>("EmailTemplatesId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Subject")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EmailTemplatesId");
+
+                    b.ToTable("EmailTemplate");
+
+                    b.HasData(
+                        new
+                        {
+                            EmailTemplatesId = 2,
+                            Content = @"<p>Thank you very much for ordering your website through Plinx!</p>
+                            <p>Your order is being processed and we will be in contact with you shortly</p>
+                            <p>Your order reference is {{ORDER}}. If you have any questions, please do not hesitate to contact us at info@plinx-tech.co.uk",
+                            Subject = "Order confirmation"
+                        },
+                        new
+                        {
+                            EmailTemplatesId = 1,
+                            Content = "Someone has placed a new website order",
+                            Subject = "New order - {{ORDER}}"
+                        });
                 });
 
             modelBuilder.Entity("PlinxHub.Common.Models.Orders.Order", b =>
@@ -86,6 +120,9 @@ namespace PlinxHub.Infrastructure.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Surname")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -106,7 +143,72 @@ namespace PlinxHub.Infrastructure.Migrations
 
                     b.HasKey("OrderNumber");
 
+                    b.HasIndex("StatusId");
+
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.Orders.Status", b =>
+                {
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("StatusId");
+
+                    b.ToTable("Status");
+
+                    b.HasData(
+                        new
+                        {
+                            StatusId = 1,
+                            Name = "Processing Order"
+                        },
+                        new
+                        {
+                            StatusId = 2,
+                            Name = "In Build"
+                        },
+                        new
+                        {
+                            StatusId = 3,
+                            Name = "Ready"
+                        },
+                        new
+                        {
+                            StatusId = 4,
+                            Name = "Live"
+                        },
+                        new
+                        {
+                            StatusId = 6,
+                            Name = "Cancelled"
+                        },
+                        new
+                        {
+                            StatusId = 8,
+                            Name = "On Hold"
+                        });
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.ApiKeys.ApiKey", b =>
+                {
+                    b.HasOne("PlinxHub.Common.Models.Orders.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderNumber")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PlinxHub.Common.Models.Orders.Order", b =>
+                {
+                    b.HasOne("PlinxHub.Common.Models.Orders.Status", "Status")
+                        .WithMany("Order")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

@@ -203,7 +203,8 @@ namespace PlinxHub
 
             var poweruser = new IdentityUser
             {
-                Email = suEmail
+                Email = suEmail,
+                UserName = suEmail
             };
 
             var _user = await UserManager.FindByEmailAsync(suEmail);

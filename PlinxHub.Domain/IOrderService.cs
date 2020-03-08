@@ -11,7 +11,7 @@ namespace PlinxHub.Service
         Task<IEnumerable<Order>> GetOrder(OrderFilters filters);
         Task<Order> GenerateNewOrder(Order order);
         Task<Order> GetOrder(Guid id);
-        Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId);
+        Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId, OrderFilters filters);
         Task<bool> UpdateOrder(Order order);
         Task<Order> GetOrderByApiKey(string apiKey);        
     }

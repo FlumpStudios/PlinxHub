@@ -1,36 +1,64 @@
-﻿@model PlinxHub.API.Dtos.Order
-@{    
+﻿@model PlinxHub.API.Dtos.Order;
+@using System.Security.Claims;
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@{ var isEdit =  Model != null && Model.OrderNumber != Guid.Empty;}
 
-    <div class="parallax-container">
-        <div class="About-Header shadow">
-            <h2 style="color:white">Your order</h2>
-            <h3 style="color:white">This is where the magic happens</h3>
-        </div>
-        <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
+@{ 
+    var isEdit = Model != null && Model.OrderNumber != Guid.Empty;
+    var isAdmin = User.IsInRole("Admin");
+}
+
+<div class="parallax-container">
+    <div class="About-Header shadow">
+        <h2 style="color:white">Your order</h2>
+        <h3 style="color:white">This is where the magic happens</h3>
     </div>
-    <div class="container">
-        <div class="row">
-            
-            <form asp-action="@(isEdit ? "Update" : "Create")">
-                <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
+</div>
+<div class="container">
+    <div class="row">
+        <form asp-action="@(isEdit ? "Update" : "Create")">        
+            <div class="col s12 m6">
+                @if (isAdmin)
+                {
+                    <h5>Admin</h5>
+                    <div class="form-group">
+                        <label for="@nameof(Model.StatusId)">Order Status</label>
+                        <div class="input-field">
+                            <Select class="browser-default" name="@nameof(Model.StatusId)" id="@nameof(Model.StatusId)">
+                                <option value="1">Processing Order</option>
+                                <option value="2">In Build</option>
+                                <option value="3">Ready</option>
+                                <option value="4">Live</option>
+                                <option value="5">Cancelled</option>
+                                <option value="6">OnHold</option>
+                            </Select>
+                        </div>
+                    </div>
+                    <br />
+                    <h5>Users order</h5>
+                }
+                else
+                {
+                    @Html.HiddenFor(x => x.StatusId)
+                }
+            </div>
+            <div class="col s12 m6 offset-m6">
+            </div>
+
                 <div class="col s12 m6">
                     <div class="form-group">
                         <label asp-for="CompanyName" class="control-label"></label>
-                        <input asp-for="CompanyName" class="form-control" />
-                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        <input asp-for="CompanyName" required class="form-control" />                     
                     </div>
                     <div class="form-group">
-                        <label asp-for="FirstName" class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />
-                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                        <label asp-for="FirstName" required class="control-label"></label>
+                        <input asp-for="FirstName" class="form-control" />                    
                     </div>
                     <div class="form-group">
                         <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="Surname" class="form-control" />
-                        <span asp-validation-for="Surname" class="text-danger"></span>
+                        <input asp-for="Surname" required class="form-control" />                   
                     </div>
                     <div class="form-group">
                         <label asp-for="AddresssLine1" class="control-label"></label>
@@ -39,71 +67,66 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="AddresssLine2" class="control-label"></label>
-                        <input asp-for="AddresssLine2" class="form-control" />
-                        <span asp-validation-for="AddresssLine2" class="text-danger"></span>
+                        <input asp-for="AddresssLine2" class="form-control" />                        
                     </div>
                     <div class="form-group">
                         <label asp-for="Town" class="control-label"></label>
-                        <input asp-for="Town" class="form-control" />
-                        <span asp-validation-for="Town" class="text-danger"></span>
+                        <input asp-for="Town" class="form-control" />                      
                     </div>
                     <div class="form-group">
                         <label asp-for="County" class="control-label"></label>
-                        <input asp-for="County" class="form-control" />
-                        <span asp-validation-for="County" class="text-danger"></span>
+                        <input asp-for="County" class="form-control" />                       
                     </div>
                 </div>
                 <div class="col s12  m6">
                     <div class="form-group">
                         <label asp-for="Postcode" class="control-label"></label>
-                        <input asp-for="Postcode" class="form-control" />
-                        <span asp-validation-for="Postcode" class="text-danger"></span>
+                        <input asp-for="Postcode" class="form-control" />                      
                     </div>
                     <div class="form-group">
                         <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" class="form-control" />
-                        <span asp-validation-for="EmailAddress" class="text-danger"></span>
+                        <input asp-for="EmailAddress" required class="form-control" />                     
                     </div>
                     <div class="form-group">
                         <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" />
-                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                        <input asp-for="PhoneNumber" class="form-control" />                    
                     </div>
                     <div class="form-group">
                         <label asp-for="TemplateNumber" class="control-label"></label>
-                        <input asp-for="TemplateNumber" class="form-control" />
-                        <span asp-validation-for="TemplateNumber" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PrimaryBrandColour" class="control-label"></label>
-                        <input asp-for="PrimaryBrandColour" class="form-control" />
-                        <span asp-validation-for="PrimaryBrandColour" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="SecondaryBrandColour" class="control-label"></label>
-                        <input asp-for="SecondaryBrandColour" class="form-control" />
-                        <span asp-validation-for="SecondaryBrandColour" class="text-danger"></span>
+                        <input type="number" min="1" max="6" asp-for="TemplateNumber" required class="form-control" />                      
                     </div>
                     <div class="form-group">
                         <label asp-for="MediumBlogUserName" class="control-label"></label>
-                        <input asp-for="MediumBlogUserName" class="form-control" />
-                        <span asp-validation-for="MediumBlogUserName" class="text-danger"></span>
+                        <input asp-for="MediumBlogUserName" class="form-control" />                  
                     </div>
+                    <div class="form-group">
+                        <input asp-for="PrimaryBrandColour" type="color" class="form-control" />
+                        <label asp-for="PrimaryBrandColour" class="control-label"></label>               
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input asp-for="SecondaryBrandColour" type="color" class="form-control" />
+                        <label asp-for="SecondaryBrandColour" class="control-label"></label>                   
+                    </div>
+                    <br />
                     <div>
                         <h5 style="color:red"> @ViewBag.ErrorMessage</h5>
                     </div>
+
+                    @Html.HiddenFor(x => x.UserId)
+                    @Html.HiddenFor(x => x.OrderNumber)
+                    @Html.HiddenFor(x => x.CreatedDate)
+                    @Html.HiddenFor(x => x.UpdatedDate)
                     <div class="form-group">
                         <input type="submit" value="@(isEdit ? "Update" : "Create")" class="btn btn-primary" />
                     </div>
-                    @Html.HiddenFor(x => x.UserId)
-                    @Html.HiddenFor(x => x.OrderNumber)
                 </div>
-            </form>
-        </div>
+        </form>
     </div>
-    <div>
-    </div>
-    <div class="parallax-container">
-        <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
-    </div>
+</div>
+<div>
+</div>
+<div class="parallax-container">
+    <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
+</div>
 

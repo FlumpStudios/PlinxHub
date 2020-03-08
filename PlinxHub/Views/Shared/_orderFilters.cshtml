@@ -9,8 +9,51 @@
             <label>Company Name</label><input class="form-control" asp-for="Filters.CompanyName" />
             <label>Name</label> <input class="form-control" asp-for="Filters.Name" />
             <label>Email</label><input class="form-control" asp-for="Filters.EmailAddress" />
-            <label>Template</label><input class="form-control" asp-for="Filters.TemplateNumber" />
+            <label>Template</label><input min="1" max="6" class="form-control" asp-for="Filters.TemplateNumber" />
+            @Html.HiddenFor(x => x.Filters.OrderBy)
+            @Html.HiddenFor(x => x.Filters.Decending)
+            @Html.HiddenFor(x => x.Filters.Take)
+            @Html.HiddenFor(x => x.Filters.Skip)
             <input type="submit" value="Submit" class="btn btn-primary" />
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-2.2.3.js"></script>
+<script>
+    $(document).ready(function () {
+
+        //Handle ordering when clicking table headers
+        $('.orderable').click(function () {
+            var orderBy = $('#Filters_OrderBy');
+            var desc = $('#Filters_Decending');
+            var x = desc.val().toUpperCase() == 'TRUE';
+
+            if (this.id == orderBy.val())
+                desc.val(x = !x);
+
+            orderBy.val(this.id);
+            $('form').submit();
+        });
+
+        //Basic pagination stuff
+        var skip = $('#Filters_Skip');
+        $('#page_down').click(function () {
+            skip.val(parseInt(skip.val()) - 10);
+            $('form').submit();
+        });
+
+        $('#page_up').click(function () {
+            skip.val(parseInt(skip.val()) + 10);
+            $('form').submit();
+        });
+
+
+    });
+</script>
+
+<style>
+    .orderable {
+        cursor: pointer;
+    }
+</style>

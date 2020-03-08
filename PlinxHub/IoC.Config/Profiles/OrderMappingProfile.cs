@@ -19,6 +19,9 @@ namespace PlinxHub.Ioc.Config.Profiles
 
             CreateMap<dm.Filters.OrderFilters, vm.OrderFilters>();
             CreateMap<dm.Filters.OrderFilters, vm.OrderFilters>().ReverseMap();
+
+            CreateMap<dm.Orders.Status, vm.Status>();
+            CreateMap<dm.Orders.Status, vm.Status>().ReverseMap();
         }
     }
 }

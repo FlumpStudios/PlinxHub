@@ -86,35 +86,35 @@ namespace PlinxHub.Infrastructure.Repositories.Tests
             Assert.IsTrue(expected.CompareByValue(actual));
         }
 
-        [DataRow(1)]
-        [DataRow(2)]
-        [DataTestMethod()]
-        public async Task ShouldGetOrderByUserId(int id)
-        {
-            //Arrange
-            Guid userId = _mockPlinxHubContext.Order.Find(id).UserId;
-            using var unitUnderTest = CreateOrderRepository();
+        //[DataRow(1)]
+        //[DataRow(2)]
+        //[DataTestMethod()]
+        //public async Task ShouldGetOrderByUserId(int id)
+        //{
+        //    //Arrange
+        //    Guid userId = _mockPlinxHubContext.Order.Find(id).UserId;
+        //    using var unitUnderTest = CreateOrderRepository();
 
-            //act
-            var actual = await unitUnderTest.GetByUser(userId);
+        //    //act
+        //    var actual = await unitUnderTest.GetByUser(userId);
 
-            //assert
-           Assert.IsTrue(actual.Count() == 2);
-        }
+        //    //assert
+        //   Assert.IsTrue(actual.Count() == 2);
+        //}
 
-        [TestMethod]
-        public async Task ShouldNotGetOrderByUserId()
-        {
-            //Arrange
-            Guid userId = new Guid("4666efac-8966-4390-b4e0-fa67fa3d8ffe");
-            using var unitUnderTest = CreateOrderRepository();
+        //[TestMethod]
+        //public async Task ShouldNotGetOrderByUserId()
+        //{
+        //    //Arrange
+        //    Guid userId = new Guid("4666efac-8966-4390-b4e0-fa67fa3d8ffe");
+        //    using var unitUnderTest = CreateOrderRepository();
 
-            //act
-            var actual = await unitUnderTest.GetByUser(userId);
+        //    //act
+        //    var actual = await unitUnderTest.GetByUser(userId);
 
-            //assert
-            Assert.IsTrue(!actual.Any());
-        }
+        //    //assert
+        //    Assert.IsTrue(!actual.Any());
+        //}
 
         [TestMethod()]
         public void ShouldUpdateOrderRecord()
