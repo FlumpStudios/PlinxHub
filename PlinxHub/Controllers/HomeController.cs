@@ -36,7 +36,6 @@ namespace PlinxHub.Controllers
         /// <summary>
         /// View action for the privacy policy
         /// </summary>
-        [Authorize(Roles = "Admin")]
         public IActionResult Privacy()
         {
             return View();
@@ -55,7 +54,6 @@ namespace PlinxHub.Controllers
         /// View action for the contact page
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
         public ActionResult Contact(ContactModel model)
         {
             return View(model);
@@ -64,17 +62,22 @@ namespace PlinxHub.Controllers
         /// <summary>
         /// View action for the OurServices page
         /// </summary>
-        /// <returns></returns>
+        public ActionResult Templates()
+        {
+            return View();
+        }
+
+        /// <summary>
+        /// View action for the OurServices page
+        /// </summary>
         public ActionResult OurServices()
         {
-
             return View();
         }
 
         /// <summary>
         /// View action  for the error page
         /// </summary>
-        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -126,3 +126,7 @@ body {
     .footer-links a:hover {
         color: #ffab40 !important;
     }
+
+.sidenav-overlay {
+    z-index:100 !important;
+}

@@ -5,22 +5,20 @@
     var showBanner = !consentFeature?.CanTrack ?? false;
     var cookieString = consentFeature?.CreateConsentCookie();
 }
-<h1>AHHHHH</h1>
-
 @if (showBanner)
 {
-    <div id="cookieConsent" style="position:fixed" class="alert alert-info alert-dismissible fade show" role="alert">
-        Use this space to summarize your privacy and cookie use policy. <a asp-page="/Privacy">Learn More </a>.
-        <button type="button" class="btn btn-small accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
-        </button>
-    </div>
+<div id="cookieConsent" style="position:fixed" class="alert alert-info alert-dismissible fade show" role="alert">
+    Use this space to summarize your privacy and cookie use policy. @Html.ActionLink("Learn More", "Privacy", "Home").
+    <button type="button" class="btn btn-small accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
+        <span aria-hidden="true">Accept</span>
+    </button>
+</div>
     <script>
-        console.log("COOKIE WARNING");
         (function () {
             var button = document.querySelector("#cookieConsent button[data-cookie-string]");
             button.addEventListener("click", function (event) {
                 document.cookie = button.dataset.cookieString;
+                document.getElementById("cookieConsent").style.display = "none";
             }, false);
         })();
     </script>

@@ -140,7 +140,7 @@
     
             $(document).ready(function () {
                 $('.carousel').carousel();
-                $(".button-collapse").sideNav();
+                //$(".button-collapse").sideNav();
                 $('.slider').slider();
                 $('.materialboxed').materialbox();
             });

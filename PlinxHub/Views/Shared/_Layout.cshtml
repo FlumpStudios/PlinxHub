@@ -10,53 +10,62 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="~/css/MainCSS.css" media="screen,projection" />
-    <link href="~/css/materialize.css" rel="stylesheet"
-          type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <title>Plinx Web Design</title>
 </head>
 <body>
     <div class="navbar-fixed">
+        <ul id="dropdown1" class="dropdown-content">           
+            <li><a class="template-link" target="_blank" href="~/Templates/AppLandingPage/applab/index.html">Template 1</a></li>
+            <li><a class="template-link" target="_blank" href="~/Templates/AppLandingPage/favison/index.html"> Template 2</a></li>
+            <li><a class="template-link" target="_blank" href="~/Templates/AppLandingPage/racks/index.html">Template 3</a></li>
+            <li><a class="template-link" target="_blank" href="~/Templates/AppLandingPage/sasu/">Template 4</a></li>
+            <li><a class="template-link" target="_blank" href="~/Templates/AppLandingPage/unapp/">Template 5</a></li>
+        </ul>
         <nav>
             <div class="nav-wrapper">
                 <a href="Index"><img src="~/Content/Images/PlinxLogo.png" class="logo brand-logo" /></a>
-                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+                <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
                     <li>@Html.ActionLink("About Us", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Our Services", "OurServices", "Home")</li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Template<i class="material-icons right">arrow_drop_down</i></a></li>
                     <li>|</li>
-                    <partial name="_LoginPartial" />
-                </ul>
-                <ul class="side-nav" id="mobile-demo">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About Us", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    <li>@Html.ActionLink("Our Services", "OurServices", "Home")</li>
-                    <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>
                     <partial name="_LoginPartial" />
                 </ul>
             </div>
         </nav>
+        <ul class="sidenav" id="mobile-demo">
+            <li>@Html.ActionLink("Home", "Index", "Home")</li>
+            <li>@Html.ActionLink("About Us", "About", "Home")</li>
+            <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            <li>@Html.ActionLink("Our Services", "OurServices", "Home")</li>
+            <li><a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a></li>                      
+            <partial name="_LoginPartial" />
+        </ul>
     </div>
     @RenderBody()
-    <partial name="_CookieConsentPartial"/>
+    <partial name="_CookieConsentPartial" />
     <partial name="Footer" />
     @RenderSection("Scripts", required: false)
 </body>
 </html>
-<script src="~/Scripts/jquery-2.2.3.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="~/Scripts/indexScript.js"></script>
 <script src="~/Scripts/jquery.textillate.js"></script>
 <script src="~/Scripts/jquery.lettering.js"></script>
 <script src="~/Scripts/jquery.fittext.js"></script>
-<script src="~/js/materialize.js"></script>
 <script src="~/js/site.js"></script>
-
 <script src="https://ajax.aspnetcdn.com/ajax/modernizr/modernizr-2.7.2.js"></script>
-<script src="~/js/materialize.min.js"></script>
-<script type="text/javascript" src="js/materialize.min.js"></script>
 <script src="https://yandex.st/highlightjs/7.3/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+    $('document').ready(function () {
+        $(".dropdown-trigger").dropdown();
+        $('.sidenav').sidenav();
+    });
+</script>
