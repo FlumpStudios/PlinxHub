@@ -130,3 +130,102 @@ body {
 .sidenav-overlay {
     z-index:100 !important;
 }
+
+
+.template-link {
+    font-style: italic;    
+}
+
+    .template-link .material-icons {
+        float: right !important;      
+    }
+
+    .template-header {
+        font-weight: bold;
+        border-bottom-style: solid;
+        border-width: 1px;
+        cursor: default;
+    }
+
+#dropdown1 {
+    min-width: 370px;
+    z-index: 1011;
+}
+
+    #preview-window {
+        width: 332px;
+        height: 680px;
+        border: 0;
+        border-radius: 10px;
+    }
+
+    .preview-window-container {
+        overflow: hidden;
+        position: fixed;
+        z-index: 100;
+        top: 117px;
+        left: 123px;
+        display: none;
+    }
+
+#image-frame {
+    z-index: 98;
+    top: -40px;
+    left: 40px;
+    position: fixed;
+    display: none;
+}
+
+#close-preview {
+    position: fixed;
+    color: red;
+    z-index: 99;
+    font-weight: bold;
+    font-size: 18px;
+    top: 62px;
+    left: 325px;
+    display: none;
+    cursor: pointer;
+}
+
+@media only screen and (min-width: 1200px) {
+    #dropdown1 {
+        min-width: 550px;
+    } 
+}
+
+@media only screen and (max-width: 1400px) {
+    #close-preview {
+        left: 225px;
+    }
+
+    #image-frame {
+        left: -50px;
+    }
+
+    .preview-window-container {
+        left: 30px;
+    }
+}
+
+@media only screen and (min-width: 1400px) {
+    #dropdown1 {
+        min-width: 650px;
+    }
+    .template-link {
+        padding-left: 45px !important;
+    }
+}
+
+
+
+
+
+
+.pin-icon {
+    transition: all .2s ease-in-out;
+}
+
+    .pin-icon:hover {
+        transform: scale(1.3);
+    }
