@@ -39,6 +39,30 @@ namespace FiLogger.Service.Services
         }
 
         /// <summary>
+        /// Send message without template
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="subject"></param>
+        /// <param name="message"></param>
+        public async Task<Response> Send(
+            string from,
+            string to,
+            string subject,
+            string message)
+        {
+            var msg = MailHelper.CreateSingleEmail(
+                            new EmailAddress(from),
+                           new EmailAddress(to),
+                           subject,
+                           message,
+                           RemoveHtml(message));
+
+            var client = new SendGridClient(_SendGridKey);
+            return await client.SendEmailAsync(msg);
+        }
+
+        /// <summary>
         /// Send email and use string params list of file locations to add attachments and generate attachment names based on filename
         /// </summary>
         /// <param name="email"></param>

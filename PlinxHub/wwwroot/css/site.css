@@ -229,3 +229,12 @@ body {
     .pin-icon:hover {
         transform: scale(1.3);
     }
+
+.Message-Reply {
+font-weight: bold;
+color: red;
+}
+
+.contact-section{
+    padding-bottom:86px !important;
+}

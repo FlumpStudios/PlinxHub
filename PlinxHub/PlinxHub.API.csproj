@@ -11,6 +11,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\Templates\Personal\**" />
+    <Content Remove="wwwroot\Templates\Personal\**" />
+    <EmbeddedResource Remove="wwwroot\Templates\Personal\**" />
+    <None Remove="wwwroot\Templates\Personal\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="wwwroot\Content\Images\Images\code.jpeg" />
     <None Include="wwwroot\Content\Images\Images\contactPic.png" />
     <None Include="wwwroot\Content\Images\Images\Facebook.png" />
@@ -65,8 +72,11 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\fonts\" />
-    <Folder Include="wwwroot\Templates\" />
     <Folder Include="wwwroot\Scripts\" />
+    <Folder Include="wwwroot\Templates\Gaming\" />
+    <Folder Include="wwwroot\Templates\Blogs\" />
+    <Folder Include="wwwroot\Templates\Business\" />
+    <Folder Include="wwwroot\Templates\Portfolio\" />
   </ItemGroup>
 
 

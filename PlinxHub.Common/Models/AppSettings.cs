@@ -12,5 +12,6 @@ namespace PlinxHub.Common.Models
         public string SenderAddress { get; set; }
         public string SenderName { get; set; }
         public bool SendConfirmationEmails { get; set; }
+        public string ContactEmail { get; set; }
     }
 }

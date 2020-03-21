@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Net.Mail;
-using Microsoft.AspNetCore.Authorization;
+using System.Threading.Tasks;
+using FiLogger.Service.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using PlinxHub.Common.Models;
+using System.Net;
 
 namespace PlinxHub.Controllers
 {
@@ -14,14 +16,22 @@ namespace PlinxHub.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
+        private readonly IEmailService _emailService;
+        private readonly IOptions<AppSettings> _settings;
         /// <summary>
         /// Constructor method for the home controller
         /// </summary>
         /// <param name="logger"></param>
-        public HomeController(ILogger<HomeController> logger)
+        /// <param name="emailService"></param>
+        /// <param name="settings"></param>
+        public HomeController(
+            ILogger<HomeController> logger,
+            IEmailService emailService,
+            IOptions<AppSettings> settings)
         {
             _logger = logger;
+            _emailService = emailService;
+            _settings = settings;
         }
 
         /// <summary>
@@ -90,28 +100,32 @@ namespace PlinxHub.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public ActionResult SendEmail(ContactModel model)
+        public async Task<ActionResult> SendEmail(ContactModel model)
         {
             try
             {
-                MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("");
+                var message = $"<p>Name: {model.Name} </p> " +
+                    $"<p>Email: {model.EmailAddress} </p> " +
+                    $"<p>PhoneNumber: {model.PhoneNumber} </p>" +
+                    $"<p>Company: {model.Company} </p>" +
+                    $"<p>Message: {model.Message} </p>";
 
-                mail.From = new MailAddress("");
-                mail.To.Add("");
-                mail.Subject = "New Email from " + model.Company;
-                mail.Body = model.Message;
+                var response = await  _emailService.Send(
+                    from: model.EmailAddress,
+                    to: _settings.Value.Emailing.ContactEmail,
+                    subject: "Contact form submission from Plinxhub",
+                    message: message);
 
-                SmtpServer.Port = 25;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("", "");
-                SmtpServer.EnableSsl = true;
-                SmtpServer.Send(mail);
-                ViewBag.MessageReply = "Thank you for getting in contact. We will be in touch shortly";
+                if (response.StatusCode != HttpStatusCode.Accepted)
+                    throw new Exception("Email could not send");
+
+                ViewBag.MessageReply = "Your message has been sent, someone will be in contact soon. ";
+
                 return View("Contact", model);
             }
             catch (Exception e)
             {
-                ViewBag.MessageReply = "Oops! something went wrong, please try again later. Error: " + e;
+                ViewBag.MessageReply = "Oops! something went wrong, please try again later. ";
                 return View("Contact", model);
             }
         }

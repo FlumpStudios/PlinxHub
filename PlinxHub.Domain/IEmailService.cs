@@ -7,6 +7,7 @@ namespace FiLogger.Service.Services
 {
     public interface IEmailService
     {
+        Task<Response> Send(string from, string to, string subject, string message);
         Task<Response> Send(Email email);
         Task<Response> Send(Email email, params Attachment[] attachments);
         Task<Response> Send(Email email, params string[] attachments);
