@@ -10,14 +10,14 @@ using PlinxHub.Infrastructure.Data;
 namespace PlinxHub.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200307173917_Initial")]
+    [Migration("20200321115314_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -183,12 +183,12 @@ namespace PlinxHub.Infrastructure.Migrations
                         },
                         new
                         {
-                            StatusId = 6,
+                            StatusId = 5,
                             Name = "Cancelled"
                         },
                         new
                         {
-                            StatusId = 8,
+                            StatusId = 6,
                             Name = "On Hold"
                         });
                 });

@@ -15,7 +15,7 @@ namespace PlinxHub.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -181,12 +181,12 @@ namespace PlinxHub.Infrastructure.Migrations
                         },
                         new
                         {
-                            StatusId = 6,
+                            StatusId = 5,
                             Name = "Cancelled"
                         },
                         new
                         {
-                            StatusId = 8,
+                            StatusId = 6,
                             Name = "On Hold"
                         });
                 });

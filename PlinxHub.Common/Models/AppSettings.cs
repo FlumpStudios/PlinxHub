@@ -3,8 +3,9 @@ namespace PlinxHub.Common.Models
     public class AppSettings
     {
         public bool UseInMemDB { get; set; }
-        public bool EnableSocialLogins { get; set; }        
+        public bool EnableSocialLogins { get; set; }
         public Emailing Emailing { get; set; }
+        public bool UseEnviromentalVariables { get; set; }
     }
 
     public class Emailing

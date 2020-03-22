@@ -21,6 +21,7 @@ using PlinxHub.Common.Crypto;
 using CryptoLib;
 using FiLogger.Service.Services;
 using System.Threading.Tasks;
+using PlinxHub.Common.Extensions;
 
 namespace PlinxHub
 {
@@ -36,7 +37,6 @@ namespace PlinxHub
         public IConfiguration Configuration { get; }
 
         private AppSecrets _secrets;
-        
         private AppSettings _settings;
 
         /// <summary>
@@ -46,6 +46,8 @@ namespace PlinxHub
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            _secrets = new AppSecrets();
+            _settings = new AppSettings();
         }
 
         /// <summary>
@@ -54,20 +56,28 @@ namespace PlinxHub
         /// <param name="services"></param>
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<AppSecrets>(Configuration);
-            services.Configure<AppSettings>(Configuration);
 
-            _secrets = Configuration.Get<AppSecrets>();
+            services.Configure<AppSettings>(Configuration);
             _settings = Configuration.Get<AppSettings>();
+
+
+            if (_settings.UseEnviromentalVariables)
+            {
+                _secrets.MapAppSecretsToEnvVariables();
+            }
+            else
+            {
+                services.Configure<AppSecrets>(Configuration);   
+                _secrets = Configuration.Get<AppSecrets>();
+            }
 
             if (_settings.UseInMemDB)
             {
                 services.AddDbContext<PlinxHubContext>(options =>
                     options.UseInMemoryDatabase(databaseName:"Identity"));
-                    
+
                 services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseInMemoryDatabase(databaseName: "PlinxHubDB"));
-
             }
             else
             {

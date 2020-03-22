@@ -105,8 +105,8 @@ namespace PlinxHub.Infrastructure.Migrations
                     { 2, "In Build" },
                     { 3, "Ready" },
                     { 4, "Live" },
-                    { 6, "Cancelled" },
-                    { 8, "On Hold" }
+                    { 5, "Cancelled" },
+                    { 6, "On Hold" }
                 });
 
             migrationBuilder.CreateIndex(
