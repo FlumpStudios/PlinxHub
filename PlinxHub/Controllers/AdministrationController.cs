@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlinxHub.Service;
 using System.Threading.Tasks;
+using System;
 
 namespace PlinxHub.API.Controllers
 {
@@ -47,5 +48,13 @@ namespace PlinxHub.API.Controllers
 
             return View(response);
         }
+
+        /// <summary>
+        /// Get API key from order number
+        /// </summary>
+        /// <param name="orderId"></param>        
+        [HttpGet]
+        public async Task<ActionResult<string>> GetApiKey(Guid orderId) =>
+             await _orderService.GetApiKeyByOrder(orderId);
     }
 }

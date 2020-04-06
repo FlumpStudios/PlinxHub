@@ -21,5 +21,6 @@ namespace PlinxHub.Infrastructure.Repositories
         void Save();
         ApiKey CreateApiKey(ApiKey apiKey);
         Task<Order> GetByApiKey(string apiKey);
+        Task<string> GetApiKeyByOrder(Guid orderNumber);
     }
 }

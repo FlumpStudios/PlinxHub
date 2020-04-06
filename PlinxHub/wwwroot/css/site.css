@@ -27,7 +27,7 @@ a {
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  font-size: 14px;
+  font-size: 14px;  
 }
 @media (min-width: 768px) {
   html {
@@ -59,8 +59,8 @@ html {
 }
 
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;   
 }
 .footer {
   position: absolute;
@@ -76,7 +76,7 @@ body {
     font-family: "Lato", sans-serif;
 }
 
-.sidenav {
+.mySidenav {
     height: 100%;
     width: 0;
     position: fixed;
@@ -90,7 +90,7 @@ body {
     box-shadow: 5px 5px 5px rgba(68, 68, 68, 0.6);
 }
 
-    .sidenav a {
+    .mySidenav a {
         padding: 8px 8px 8px 32px;
         text-decoration: none;
         font-size: 25px;
@@ -99,11 +99,11 @@ body {
         transition: 0.3s;
     }
 
-        .sidenav a:hover {
+        .mySidenav a:hover {
             color: #f1f1f1;
         }
 
-    .sidenav .closebtn {
+    .mySidenav .closebtn {
         position: absolute;
         top: 0;
         right: 25px;
@@ -112,10 +112,10 @@ body {
     }
 
 @media screen and (max-height: 450px) {
-    .sidenav {
+    .mySidenav {
         padding-top: 15px;
     }
-        .sidenav a {
+        .mySidenav a {
             font-size: 18px;
         }
 }
@@ -218,10 +218,6 @@ body {
 }
 
 
-
-
-
-
 .pin-icon {
     transition: all .2s ease-in-out;
 }
@@ -237,4 +233,45 @@ color: red;
 
 .contact-section{
     padding-bottom:86px !important;
+}
+
+.field-validation-error, .validation-summary-errors {
+    color: red;
+    font-weight: bold;
+}
+
+.main-content{
+    visibility:hidden;
+}
+
+#page-loader {
+    position: fixed !important;
+    top: 50% !important;
+    left: 49% !important;
+    margin: auto;    
+}
+
+.loading-text {
+    font-size:large;
+    color: white;
+}
+
+@media only screen and (max-width: 800px) {
+    .footer-content {
+        display: none;
+    }
+    .page-footer {
+        width:auto !important;
+    }
+
+    #page-loader {
+        position: fixed !important;
+        top: 50% !important;
+        left: 42% !important;
+        margin: auto;
+    }
+}
+
+.table-container {
+    overflow-x:auto;
 }

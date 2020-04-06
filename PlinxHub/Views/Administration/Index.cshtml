@@ -23,101 +23,136 @@
 
     @using (Html.BeginForm("Index", "Administration", FormMethod.Get))
     {
-   
+
         <partial name="_orderFilters" />
     }
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th id="@nameof(Order.OrderNumber)" class="orderable">
-                    Order Number
-                </th>
-                <th id="@nameof(Order.CreatedDate)" class="orderable">
-                    Order Date
-                </th>
-                <th id="@nameof(Order.CompanyName)" class="orderable">
-                    Company Name
-                </th>
-                <th id="@nameof(Order.FirstName)" class="orderable">
-                    First Name
-                </th>
-                <th id="@nameof(Order.Surname)" class="orderable">
-                    Surname
-                </th>
-                <th id="@nameof(Order.Postcode)" class="orderable">
-                    Postcode
-                </th>
-                <th id="@nameof(Order.EmailAddress)" class="orderable">
-                    Email
-                </th>
-                <th id="@nameof(Order.TemplateNumber)" class="orderable">
-                    Template
-                </th>
-                <th id="@nameof(Order.StatusId)" class="orderable">
-                    Status
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Order)
-            {
-            <tr>
-                <td>
-                    @item.OrderNumber.GetSubString()
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CreatedDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CompanyName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.FirstName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Surname)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Postcode)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmailAddress)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TemplateNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Status.Name)
-                </td>
-                <td>
-                    <span>@Html.ActionLink("Update", "Index", "Order", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    <div class="table-container">
+        <table class="table striped centered responsive-table">
+            <thead>
+                <tr>
+                    <th id="@nameof(Order.OrderNumber)" class="orderable">
+                        Order Number
+                    </th>
+                    <th id="@nameof(Order.CreatedDate)" class="orderable">
+                        Order Date
+                    </th>
+                    <th id="@nameof(Order.CompanyName)" class="orderable">
+                        Company Name
+                    </th>
+                    <th id="@nameof(Order.FirstName)" class="orderable">
+                        First Name
+                    </th>
+                    <th id="@nameof(Order.Surname)" class="orderable">
+                        Surname
+                    </th>
+                    <th id="@nameof(Order.Postcode)" class="orderable">
+                        Postcode
+                    </th>
+                    <th id="@nameof(Order.EmailAddress)" class="orderable">
+                        Email
+                    </th>
+                    <th id="@nameof(Order.TemplateNumber)" class="orderable">
+                        Template
+                    </th>
+                    <th id="@nameof(Order.StatusId)" class="orderable">
+                        Status
+                    </th>
+                    <th>
+
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Order)
+                {
+                    <tr>
+                        <td>
+                            @item.OrderNumber.GetSubString()
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FirstName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Surname)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Postcode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.EmailAddress)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TemplateNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status.Name)
+                        </td>
+                        <td>
+                            <span>@Html.ActionLink("Update", "Index", "Order", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
+                        </td>
+                        <td>
+                            <button data-orderNumber="@item.OrderNumber" class="btn btn-primary get-order-number">Get Api key</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        </div>
+
+        <br />
+
+        @if (Model.Order.Count() < 10)
+        {
+            <button disabled id="page_down" class="btn btn-primary btn-sm"><i class="material-icons left">arrow_back</i></button>
+        }
+        else
+        {
+            <button id="page_down" class="btn btn-primary btn-sm"><i class="material-icons left">arrow_back</i></button>
+        }
+
+        @if (Model.Filters.Take > 0)
+        {
+            <button id="page_up" class="btn btn-primary"><i class="material-icons left">arrow_forward</i></button>
+        }
+        else
+        {
+            <button disabled id="page_down" class="btn btn-primary"><i class="material-icons left">arrow_forward</i></button>
+        }
+    </div>
     <br />
 
-    @if (Model.Order.Count() < 10)
-    {
-        <button disabled id="page_down" class="btn btn-primary btn-sm"><i class="material-icons left">arrow_back</i></button>
-    }
-    else
-    {
-        <button id="page_down" class="btn btn-primary btn-sm"><i class="material-icons left">arrow_back</i></button>
-    }
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <h6>Api key</h6>
+            <p class="result"></p>
+        </div>
+        <div class="modal-footer">
+            <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
+        </div>
+    </div>
 
-    @if (Model.Filters.Take > 0)
-    {
-        <button id="page_up" class="btn btn-primary"><i class="material-icons left">arrow_forward</i></button>
-    }
-    else
-    {
-        <button disabled id="page_down" class="btn btn-primary"><i class="material-icons left">arrow_forward</i></button>
-    }
-</div>
-<br />
-<div class="parallax-container">
-    <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
-</div>
+    <div class="parallax-container">
+        <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
+    </div>
+
+    <script>
+        $(document).ready(
+            function () {
+                $('#modal1').modal();
+
+                $('.get-order-number').click(function (e) {
+                    var orderNumber = this.getAttribute("data-orderNumber");
+                    $.get("Administration/GetApiKey", { orderId: orderNumber }, function (data) {
+                        $(".result").html(data);
+                        $('#modal1').modal('open');
+                    });
+                });
+            });
+    </script>

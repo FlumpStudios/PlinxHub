@@ -4,11 +4,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@{ 
+@{
     var isEdit = Model != null && Model.OrderNumber != Guid.Empty;
     var isAdmin = User.IsInRole("Admin");
 }
-
 <div class="parallax-container">
     <div class="About-Header shadow">
         <h2 style="color:white">Your order</h2>
@@ -19,7 +18,7 @@
 <div class="container">
     <div class="row">
         <br />
-        <form asp-action="@(isEdit ? "Update" : "Create")">        
+        <form asp-action="@(isEdit ? "Update" : "Create")">
             <div class="col s12 m6">
                 @if (isAdmin)
                 {
@@ -47,192 +46,186 @@
             </div>
             <div class="col s12 m6 offset-m6">
             </div>
-                <div class="col s12 m6">
-                    <div class="form-group">
-                        <label asp-for="CompanyName" class="control-label"></label>
-                        <input asp-for="CompanyName" required class="form-control" />                     
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="FirstName" required class="control-label"></label>
-                        <input asp-for="FirstName" class="form-control" />                    
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Surname" class="control-label"></label>
-                        <input asp-for="Surname" required class="form-control" />                   
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddresssLine1" class="control-label"></label>
-                        <input asp-for="AddresssLine1" class="form-control" />
-                        <span asp-validation-for="AddresssLine1" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="AddresssLine2" class="control-label"></label>
-                        <input asp-for="AddresssLine2" class="form-control" />                        
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Town" class="control-label"></label>
-                        <input asp-for="Town" class="form-control" />                      
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="County" class="control-label"></label>
-                        <input asp-for="County" class="form-control" />                       
-                    </div>
+            <div class="col s12 m6">
+                <div class="form-group">
+                    <label asp-for="CompanyName" class="control-label"></label>
+                    <input asp-for="CompanyName" required class="form-control" />
                 </div>
-                <div class="col s12  m6">
-                    <div class="form-group">
-                        <label asp-for="Postcode" class="control-label"></label>
-                        <input asp-for="Postcode" class="form-control" />                      
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="EmailAddress" class="control-label"></label>
-                        <input asp-for="EmailAddress" required class="form-control" />                     
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="PhoneNumber" class="control-label"></label>
-                        <input asp-for="PhoneNumber" class="form-control" />                    
-                    </div>
-                    <div class="form-group" style="padding-bottom: 9px;">
-                        <label asp-for="TemplateNumber" class="control-label"></label>
-                        <select name="TemplateNumber" class="browser-default">
-                            <optgroup label="Gaming">
-                                <option value="1">
-                                    Gaming Template 1
-                                </option>
-                                <option value="2">
-                                    Gaming Template 2
-                                </option>
-                                <option value="3">
-                                    Gaming Template 3
-                                </option>
-                                <option value="4">
-                                    Gaming Template 4
-                                </option>
-                                <option value="5">
-                                    Gaming Template 5
-                                </option>
-                            </optgroup>
-                            <optgroup label="App Landing Pages">
-                                <option value="7">
-                                    App Landing Page Template 1
-                                </option>
-                                <option value="8">
-                                    App Landing Page Template 2
-                                </option>
-                                <option value="9">
-                                    App Landing Page Template 3
-                                </option>
-                                <option value="10">
-                                    App Landing Page Template 4
-                                </option>
-                                <option value="11">
-                                    App Landing Page Template 5
-                                </option>
-                            </optgroup>
-                            <optgroup label="Finance">
-                                <option value="12">
-                                    Personal Template 1
-                                </option>
-                                <option value="13">
-                                    Personal Template 2
-                                </option>
-                                <option value="14">
-                                    Personal Template 3
-                                </option>
-                                <option value="15">
-                                    Personal Template 4
-                                </option>
-                                <option value="16">
-                                    Personal Template 5
-                                </option>
-                            </optgroup>
-                            <optgroup label="Blogs">
-                                <option value="17">
-                                    Blogs Template 1
-                                </option>
-                                <option value="18">
-                                    Blogs Template 2
-                                </option>
-                                <option value="19">
-                                    Blogs Template 3
-                                </option>
-                                <option value="20">
-                                    Blogs Template 4
-                                </option>
-                                <option value="21">
-                                    Blogs Template 5
-                                </option>
-                            </optgroup>
-                            <optgroup label="Portfolio">
-                                <option value="22">
-                                    Portfolio Template 1
-                                </option>
-                                <option value="23">
-                                    Portfolio Template 2
-                                </option>
-                                <option value="24">
-                                    Portfolio Template 3
-                                </option>
-                                <option value="25">
-                                    Portfolio Template 4
-                                </option>
-                                <option value="26">
-                                    Portfolio Template 5
-                                </option>
-                            </optgroup>       
-                            <optgroup label="Business">
-                                <option value="27">
-                                    Business Template 1
-                                </option>
-                                <option value="28">
-                                    Business Template 2
-                                </option>
-                                <option value="29">
-                                    Business Template 3
-                                </option>
-                                <option value="30">
-                                    Business Template 4
-                                </option>
-                                <option value="31">
-                                    Business Template 5
-                                </option>
-                            </optgroup>
-                        </select>
-                    </div>             
-                        <div class="form-group">
-                            <label asp-for="MediumBlogUserName" class="control-label"></label>
-                            <input asp-for="MediumBlogUserName" class="form-control" />
-                        </div>
-                        <div class="form-group">
-                            <input asp-for="PrimaryBrandColour" type="color" class="form-control" />
-                            <label asp-for="PrimaryBrandColour" class="control-label"></label>
-                        </div>
-                        <br />
-                        <div class="form-group">
-                            <input asp-for="SecondaryBrandColour" type="color" class="form-control" />
-                            <label asp-for="SecondaryBrandColour" class="control-label"></label>
-                        </div>
-                        <br />
-                        <div>
-                            <h5 style="color:red"> @ViewBag.ErrorMessage</h5>
-                        </div>
+                <div class="form-group">
+                    <label asp-for="FirstName" required class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Surname" class="control-label"></label>
+                    <input asp-for="Surname" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="AddresssLine1" class="control-label"></label>
+                    <input asp-for="AddresssLine1" class="form-control" />
+                    <span asp-validation-for="AddresssLine1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AddresssLine2" class="control-label"></label>
+                    <input asp-for="AddresssLine2" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Town" class="control-label"></label>
+                    <input asp-for="Town" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="County" class="control-label"></label>
+                    <input asp-for="County" class="form-control" />
+                </div>
+            </div>
+            <div class="col s12  m6">
+                <div class="form-group">
+                    <label asp-for="Postcode" class="control-label"></label>
+                    <input asp-for="Postcode" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailAddress" class="control-label"></label>
+                    <input asp-for="EmailAddress" required class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label"></label>
+                    <input asp-for="PhoneNumber" class="form-control" />
+                </div>
+                <div class="form-group" style="padding-bottom: 9px;">
+                    <label asp-for="TemplateNumber" class="control-label"></label>
+                    <select name="TemplateNumber" class="browser-default">
+                        <optgroup label="Gaming">
+                            <option value="1">
+                                Gaming Template 1
+                            </option>
+                            <option value="2">
+                                Gaming Template 2
+                            </option>
+                            <option value="3">
+                                Gaming Template 3
+                            </option>
+                            <option value="4">
+                                Gaming Template 4
+                            </option>
+                            <option value="5">
+                                Gaming Template 5
+                            </option>
+                        </optgroup>
+                        <optgroup label="App Landing Pages">
+                            <option value="7">
+                                App Landing Page Template 1
+                            </option>
+                            <option value="8">
+                                App Landing Page Template 2
+                            </option>
+                            <option value="9">
+                                App Landing Page Template 3
+                            </option>
+                            <option value="10">
+                                App Landing Page Template 4
+                            </option>
+                            <option value="11">
+                                App Landing Page Template 5
+                            </option>
+                        </optgroup>
+                        <optgroup label="Finance">
+                            <option value="12">
+                                Personal Template 1
+                            </option>
+                            <option value="13">
+                                Personal Template 2
+                            </option>
+                            <option value="14">
+                                Personal Template 3
+                            </option>
+                            <option value="15">
+                                Personal Template 4
+                            </option>
+                            <option value="16">
+                                Personal Template 5
+                            </option>
+                        </optgroup>
+                        <optgroup label="Blogs">
+                            <option value="17">
+                                Blogs Template 1
+                            </option>
+                            <option value="18">
+                                Blogs Template 2
+                            </option>
+                            <option value="19">
+                                Blogs Template 3
+                            </option>
+                            <option value="20">
+                                Blogs Template 4
+                            </option>
+                            <option value="21">
+                                Blogs Template 5
+                            </option>
+                        </optgroup>
+                        <optgroup label="Portfolio">
+                            <option value="22">
+                                Portfolio Template 1
+                            </option>
+                            <option value="23">
+                                Portfolio Template 2
+                            </option>
+                            <option value="24">
+                                Portfolio Template 3
+                            </option>
+                            <option value="25">
+                                Portfolio Template 4
+                            </option>
+                            <option value="26">
+                                Portfolio Template 5
+                            </option>
+                        </optgroup>
+                        <optgroup label="Business">
+                            <option value="27">
+                                Business Template 1
+                            </option>
+                            <option value="28">
+                                Business Template 2
+                            </option>
+                            <option value="29">
+                                Business Template 3
+                            </option>
+                            <option value="30">
+                                Business Template 4
+                            </option>
+                            <option value="31">
+                                Business Template 5
+                            </option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MediumBlogUserName" class="control-label"></label>
+                    <input asp-for="MediumBlogUserName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input asp-for="PrimaryBrandColour" id="PrimaryBrandColour" type="text" class="form-control" />
+                    <label asp-for="PrimaryBrandColour" class="control-label"></label>
+                </div>
+                <br />
+                <div class="form-group">
+                    <input asp-for="SecondaryBrandColour" id="SecondaryBrandColour" type="text" class="form-control" />
+                    <label asp-for="SecondaryBrandColour" class="control-label"></label>
+                </div>
+                <br />
+                <div>
+                    <h5 style="color:red"> @ViewBag.ErrorMessage</h5>
+                </div>
 
-                        @Html.HiddenFor(x => x.UserId)
-                        @Html.HiddenFor(x => x.OrderNumber)
-                        @Html.HiddenFor(x => x.CreatedDate)
-                        @Html.HiddenFor(x => x.UpdatedDate)
-                        <div class="form-group">
-                            <input type="submit" value="@(isEdit ? "Update" : "Create")" class="btn btn-primary" />
-                        </div>
-                    </div>
+                @Html.HiddenFor(x => x.UserId)
+                @Html.HiddenFor(x => x.OrderNumber)
+                @Html.HiddenFor(x => x.CreatedDate)
+                @Html.HiddenFor(x => x.UpdatedDate)
+                <div class="form-group">
+                    <input type="submit" value="@(isEdit ? "Update" : "Create")" class="btn btn-primary" />
+                </div>
+            </div>
         </form>
     </div>
 </div>
 <div>
     <br />
 </div>
-
-<div class="parallax-container">
-    <div class="parallax"><img src="~/Content/Images/computer.jpg"></div>
-</div>
-
-

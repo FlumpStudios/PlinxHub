@@ -21,22 +21,23 @@
                     <section>
                         <form id="account" method="post">
                             <h4>Login with a Plinx account</h4>
-                            <div asp-validation-summary="All" class="text-danger"></div>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <span asp-validation-for="Input.Email" class="text-danger"></span>
                             <div class="form-group">
                                 <label asp-for="Input.Email"></label>
                                 <input asp-for="Input.Email" class="form-control" />
-                                <span asp-validation-for="Input.Email" class="text-danger"></span>
                             </div>
+                            <span asp-validation-for="Input.Password" class="text-danger"></span>
+
                             <div class="form-group">
                                 <label asp-for="Input.Password"></label>
                                 <input asp-for="Input.Password" class="form-control" />
-                                <span asp-validation-for="Input.Password" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <button style="float:right" type="submit" class="btn btn-primary">Log in</button>
-                                <div class="checkbox">
-                                    <input asp-for="Input.RememberMe" id="remember-me" />
+                                <div>                                   
                                     <label asp-for="Input.RememberMe" for="remember-me">
+                                        <input asp-for="Input.RememberMe" type="checkbox" id="remember-me" />
                                         @Html.DisplayNameFor(m => m.Input.RememberMe)
                                     </label>
                                 </div>
@@ -108,6 +109,12 @@
 }
 
 <style>
+    #remember-me{
+        opacity: 1 !important;
+        display: inline !important;
+        position:inherit !important;
+    }
+
     @@media only screen and (min-width: 1475px) {
         .social-buttons {
             width: 50%

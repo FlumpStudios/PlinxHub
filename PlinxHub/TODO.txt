@@ -1,0 +1,26 @@
+﻿Add git hooks to production
+add git hooks reference to Jenkins
+Add better quality images for roator
+Add 3rd party logins
+Add SSL certs
+Add pricing page - backlog
+
+Stretch stuff
+=============
+Add captcha on contact form
+
+DONE
+====
+Change text in cookie popup
+Fix missing jquery problem
+Fix 'Failed to find a valid digest in the 'integrity' attribute for resource'
+remove missing demo templates
+Change A-record on plinx-tech.co.uk to point to AWS site
+Check responsiveness of the template drop down
+Cookies message needs to be responsive
+Add link to administration when logged in as admin
+Add decrypted API key to administration
+Remember me check box has disappeared!
+Fix password reset link by adding Sendgrid SMTP details
+Add repo for production code
+Add jenkins service to update from git

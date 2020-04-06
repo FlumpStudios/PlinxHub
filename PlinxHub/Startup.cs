@@ -22,6 +22,9 @@ using CryptoLib;
 using FiLogger.Service.Services;
 using System.Threading.Tasks;
 using PlinxHub.Common.Extensions;
+using Microsoft.AspNetCore.HttpOverrides;
+using PlinxHub.API.Emailing;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace PlinxHub
 {
@@ -90,7 +93,7 @@ namespace PlinxHub
                         Configuration.GetConnectionString("DefaultConnection")));
             }
 
-            services.AddDefaultIdentity<IdentityUser>().AddRoles<IdentityRole>()
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true).AddRoles<IdentityRole>()
                         .AddEntityFrameworkStores<PlinxHubContext>();
                       
 
@@ -130,6 +133,11 @@ namespace PlinxHub
                 c.IncludeXmlComments(xmlPath);
             });
 
+            // requires
+            // using Microsoft.AspNetCore.Identity.UI.Services;
+            // using WebPWrecover.Services;
+            services.AddTransient<IEmailSender, EmailSender>();
+            
             services.AddCryptoManager(
                _secrets.EncryptionCipher.InputString,
                _secrets.EncryptionCipher.Salt);
@@ -168,6 +176,11 @@ namespace PlinxHub
             app.UseCookiePolicy();
 
             app.UseRouting();
+
+            app.UseForwardedHeaders(new ForwardedHeadersOptions
+            {
+                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+            });
 
             app.UseAuthentication();
             app.UseAuthorization();            

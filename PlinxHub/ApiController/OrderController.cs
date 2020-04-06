@@ -52,12 +52,6 @@ namespace PlinxHub.API.ApiController
             return _mapper.Map<vm.Order>(order);
         }
 
-        private string GetApiKey
-        {
-            get
-                {
-                    return Request.Headers[HEADER_KEY];
-                }
-        }
+        private string GetApiKey => Request.Headers[HEADER_KEY];
     }
 }

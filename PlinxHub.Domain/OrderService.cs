@@ -45,6 +45,9 @@ namespace PlinxHub.Service
         public async Task<IEnumerable<Order>> GetOrder(OrderFilters filters) =>
             await _orderRepository.Get(filters);
 
+        public async Task<string> GetApiKeyByOrder(Guid orderNumber) =>
+           _cryptoManager.GetDecryptedValue(await _orderRepository.GetApiKeyByOrder(orderNumber));
+
         public async Task<Order> GetOrder(Guid id) =>
             await _orderRepository.Get(id);
 

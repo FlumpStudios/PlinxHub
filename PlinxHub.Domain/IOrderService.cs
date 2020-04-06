@@ -13,6 +13,7 @@ namespace PlinxHub.Service
         Task<Order> GetOrder(Guid id);
         Task<IEnumerable<Order>> GetOrdersByUser(Guid UserId, OrderFilters filters);
         Task<bool> UpdateOrder(Order order);
-        Task<Order> GetOrderByApiKey(string apiKey);        
+        Task<Order> GetOrderByApiKey(string apiKey);
+        Task<string> GetApiKeyByOrder(Guid orderNumber);
     }
 }

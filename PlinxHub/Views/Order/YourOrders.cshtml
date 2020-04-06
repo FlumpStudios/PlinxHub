@@ -23,42 +23,43 @@
     }
     @if (Model.Order.Count() > 0)
     {
-        <table class="table" style="text-align:center">
-            <thead>
-                <tr>
-                    <th id="@nameof(Order.OrderNumber)" class="orderable">
-                        Order Number
-                    </th>
-                    <th id="@nameof(Order.CreatedDate)" class="orderable">
-                        Order Date
-                    </th>
-                    <th id="@nameof(Order.CompanyName)" class="orderable">
-                        Company Name
-                    </th>
-                    <th id="@nameof(Order.Surname)" class="orderable">
-                        Name
-                    </th>
-                    <th id="@nameof(Order.Postcode)" class="orderable">
-                        Postcode
-                    </th>
-                    <th id="@nameof(Order.EmailAddress)" class="orderable">
-                        Email
-                    </th>
-                    <th id="@nameof(Order.PhoneNumber)" class="orderable">
-                        Phone
-                    </th>
-                    <th id="@nameof(Order.TemplateNumber)" class="orderable">
-                        Template
-                    </th>
-                    <th id="@nameof(Order.StatusId)" class="orderable">
-                        Status
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Order)
-                {
+<div class="table-container">
+    <table class="table striped centered responsive-table">
+        <thead>
+            <tr>
+                <th id="@nameof(Order.OrderNumber)" class="orderable">
+                    Order Number
+                </th>
+                <th id="@nameof(Order.CreatedDate)" class="orderable">
+                    Order Date
+                </th>
+                <th id="@nameof(Order.CompanyName)" class="orderable">
+                    Company Name
+                </th>
+                <th id="@nameof(Order.Surname)" class="orderable">
+                    Name
+                </th>
+                <th id="@nameof(Order.Postcode)" class="orderable">
+                    Postcode
+                </th>
+                <th id="@nameof(Order.EmailAddress)" class="orderable">
+                    Email
+                </th>
+                <th id="@nameof(Order.PhoneNumber)" class="orderable">
+                    Phone
+                </th>
+                <th id="@nameof(Order.TemplateNumber)" class="orderable">
+                    Template
+                </th>
+                <th id="@nameof(Order.StatusId)" class="orderable">
+                    Status
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Order)
+            {
                 <tr>
                     <td>
                         @item.OrderNumber.GetSubString()
@@ -91,9 +92,10 @@
                         <span>@Html.ActionLink("Update", "Index", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
                     </td>
                 </tr>
-                }
-            </tbody>
-        </table>
+            }
+        </tbody>
+    </table>
+</div>
         <br />
         @if (Model.Order.Count() < 10)
         {

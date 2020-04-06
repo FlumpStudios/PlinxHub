@@ -143,5 +143,14 @@
                 //$(".button-collapse").sideNav();
                 $('.slider').slider();
                 $('.materialboxed').materialbox();
+
+                $("#PrimaryBrandColour").spectrum({
+                    color: "#f00"
+                });
+                $("#SecondaryBrandColour").spectrum({
+                    color: "#f00"
+                });
             });
+
+
        

@@ -20,5 +20,10 @@ namespace PlinxHub.API.Dtos
         /// Filters prop
         /// </summary>
         public OrderFilters Filters { get; set; }
+
+        /// <summary>
+        /// API key prop
+        /// </summary>
+        public string ApiKey { get; set; }
     }
 }

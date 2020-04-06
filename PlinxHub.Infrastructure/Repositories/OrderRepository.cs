@@ -58,6 +58,9 @@ namespace PlinxHub.Infrastructure.Repositories
             .Select(x =>  x.Order)
             .SingleAsync();
 
+        public async Task<string> GetApiKeyByOrder(Guid orderNumber) =>
+            await _context.ApiKey.Where(x => x.OrderNumber == orderNumber).Select(x => x.Key).SingleAsync();
+
         public void Update(Order order) =>
             _context.Entry(order).State = EntityState.Modified;
 
