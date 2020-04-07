@@ -145,10 +145,10 @@
                 $('.materialboxed').materialbox();
 
                 $("#PrimaryBrandColour").spectrum({
-                    color: "#f00"
+                    color: "#f000"
                 });
                 $("#SecondaryBrandColour").spectrum({
-                    color: "#f00"
+                    color: "#f000"
                 });
             });
 
