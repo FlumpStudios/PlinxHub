@@ -59,10 +59,13 @@ namespace PlinxHub.Common.Models.Orders
         [MaxLength(50)]
         public string MediumBlogUserName { get; set; }
 
+        [MaxLength(100)]
+        public string LiveUrl { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
         public DateTime UpdatedDate { get; set; }
 
-        public Status Status { get; set; }
+        public Status Status { get; set; }        
     }
 }

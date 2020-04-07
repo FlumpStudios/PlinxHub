@@ -1,7 +1,4 @@
-﻿Add git hooks to production
-add git hooks reference to Jenkins
-Add better quality images for roator
-Add 3rd party logins
+﻿Update 3rd party keys
 Add SSL certs
 Add pricing page - backlog
 
@@ -24,3 +21,6 @@ Remember me check box has disappeared!
 Fix password reset link by adding Sendgrid SMTP details
 Add repo for production code
 Add jenkins service to update from git
+Add git hooks to production
+Add better quality images for roator
+Add 3rd party logins

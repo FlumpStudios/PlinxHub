@@ -58,6 +58,9 @@
                     <th id="@nameof(Order.StatusId)" class="orderable">
                         Status
                     </th>
+                    <th id="@nameof(Order.LiveUrl)" class="orderable">
+                        Live Url
+                    </th>
                     <th>
 
                     </th>
@@ -66,41 +69,51 @@
             <tbody>
                 @foreach (var item in Model.Order)
                 {
-                    <tr>
-                        <td>
-                            @item.OrderNumber.GetSubString()
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CreatedDate)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CompanyName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FirstName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Surname)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Postcode)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.EmailAddress)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TemplateNumber)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Status.Name)
-                        </td>
-                        <td>
-                            <span>@Html.ActionLink("Update", "Index", "Order", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
-                        </td>
-                        <td>
-                            <button data-orderNumber="@item.OrderNumber" class="btn btn-primary get-order-number">Get Api key</button>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>
+                        @item.OrderNumber.GetSubString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CreatedDate)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CompanyName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Surname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Postcode)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmailAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TemplateNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Status.Name)
+                    </td>
+                    <td>
+                        @if (string.IsNullOrEmpty(item.LiveUrl))
+                        {
+                            <text>Not Set</text>
+                        }
+                        else
+                        {
+                            <a href="http://@Html.DisplayFor(modelItem => item.LiveUrl)">@Html.DisplayFor(modelItem => item.LiveUrl)</a>
+                        }
+                    </td>
+                    <td>
+                        <span>@Html.ActionLink("Update", "Index", "Order", new { orderNumber = item.OrderNumber }, new { @class = "button btn" })</span>
+                    </td>
+                    <td>
+                        <button data-orderNumber="@item.OrderNumber" class="btn btn-primary get-order-number">Get Api key</button>
+                    </td>
+                </tr>
                 }
             </tbody>
         </table>

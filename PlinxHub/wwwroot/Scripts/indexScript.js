@@ -140,7 +140,6 @@
     
             $(document).ready(function () {
                 $('.carousel').carousel();
-                //$(".button-collapse").sideNav();
                 $('.slider').slider();
                 $('.materialboxed').materialbox();
 

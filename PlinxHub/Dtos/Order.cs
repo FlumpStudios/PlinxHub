@@ -131,6 +131,13 @@ namespace PlinxHub.API.Dtos
         public string MediumBlogUserName { get; set; }
 
         /// <summary>
+        /// Location of the live site
+        /// </summary>
+        [MaxLength(100)]
+        [DisplayName("Live Url")]
+        public string LiveUrl { get; set; }
+
+        /// <summary>
         /// Date order created
         /// </summary>
         public DateTime CreatedDate { get; set; }
