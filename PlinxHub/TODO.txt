@@ -1,4 +1,5 @@
-﻿Update 3rd party keys
+﻿Confirm you email confirmation page all messed up
+Update 3rd party keys
 Add SSL certs
 Add pricing page - backlog
 

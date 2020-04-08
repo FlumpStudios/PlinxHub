@@ -101,7 +101,7 @@
                     }
                     else
                     {
-                        if (!string.IsNullOrEmpty(Model.LiveUrl))
+                        if (!string.IsNullOrEmpty(Model?.LiveUrl))
                         {
                             <label asp-for="LiveUrl" class="control-label"></label>
                             <input disabled asp-for="LiveUrl" class="form-control" />
