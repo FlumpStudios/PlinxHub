@@ -86,6 +86,14 @@ namespace PlinxHub.Controllers
         }
 
         /// <summary>
+        /// View action for the OurServices page
+        /// </summary>
+        public ActionResult MobilePreviews()
+        {
+            return View();
+        }
+
+        /// <summary>
         /// View action  for the error page
         /// </summary>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -98,7 +106,6 @@ namespace PlinxHub.Controllers
         /// Post method for sending contact email
         /// </summary>
         /// <param name="model"></param>
-        /// <returns></returns>
         [HttpPost]
         public async Task<ActionResult> SendEmail(ContactModel model)
         {
@@ -123,7 +130,7 @@ namespace PlinxHub.Controllers
 
                 return View("Contact", model);
             }
-            catch (Exception e)
+            catch
             {
                 ViewBag.MessageReply = "Oops! something went wrong, please try again later. ";
                 return View("Contact", model);
