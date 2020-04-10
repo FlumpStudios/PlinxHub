@@ -75,20 +75,24 @@
                                     <div>
                                         @foreach (var provider in Model.ExternalLogins)
                                         {
-                                            <p>
-                                                @if (string.Equals(@provider.DisplayName, "twitter", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    <button style="background:#00acee" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-twitter"></i> @provider.DisplayName</button>
-                                                }
-                                                @if (string.Equals(@provider.DisplayName, "facebook", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    <button style="background:#3b5998" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-facebook"></i> @provider.DisplayName</button>
-                                                }
-                                                @if (string.Equals(@provider.DisplayName, "linkedin", StringComparison.OrdinalIgnoreCase))
-                                                {
-                                                    <button style="background:#0e76a8" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-linkedin-in"></i> @provider.DisplayName</button>
-                                                }
-                                            </p>
+                                        <p>
+                                            @if (string.Equals(@provider.DisplayName, "google", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#00acee" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-google"></i> @provider.DisplayName</button>
+                                            }
+                                            @if (string.Equals(@provider.DisplayName, "twitter", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#00acee" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-twitter"></i> @provider.DisplayName</button>
+                                            }
+                                            @if (string.Equals(@provider.DisplayName, "facebook", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#3b5998" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-facebook"></i> @provider.DisplayName</button>
+                                            }
+                                            @if (string.Equals(@provider.DisplayName, "linkedin", StringComparison.OrdinalIgnoreCase))
+                                            {
+                                                <button style="background:#0e76a8" type="submit" class="btn btn-primary social-buttons" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account"><i class="fab fa-linkedin-in"></i> @provider.DisplayName</button>
+                                            }
+                                        </p>
 
                                         }
                                     </div>
