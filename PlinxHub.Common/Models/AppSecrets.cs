@@ -14,6 +14,7 @@ namespace PlinxHub.Common.Models
         public SocialDetails Twitter { get; set; }
         public SocialDetails Facebook { get; set; }
         public SocialDetails LinkedIn { get; set; }
+        public SocialDetails Google { get; set; }
     }
 
     public class SocialDetails

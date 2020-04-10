@@ -111,7 +111,11 @@ namespace PlinxHub
 
             if(_settings.EnableSocialLogins)
             {
-                services.AddAuthentication().AddFacebook(facebookOptions =>
+                services.AddAuthentication().AddGoogle(googleOptions => {
+                    googleOptions.ClientId = _secrets.Authentication.Google.AppID;
+                    googleOptions.ClientSecret = _secrets.Authentication.Google.AppSecret;
+                })
+                .AddFacebook(facebookOptions =>
                 {
                     facebookOptions.AppId =_secrets.Authentication.Facebook.AppID;
                     facebookOptions.AppSecret = _secrets.Authentication.Facebook.AppSecret;
