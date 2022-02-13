@@ -84,7 +84,6 @@
 
 
   <ItemGroup>
-    <ProjectReference Include="..\CryptoLib\CryptoLib.csproj" />
     <ProjectReference Include="..\PlinxHub.Common\PlinxHub.Common.csproj" />
     <ProjectReference Include="..\PlinxHub.Domain\PlinxHub.Service.csproj" />
     <ProjectReference Include="..\PlinxHub.Infrastructure\PlinxHub.Infrastructure.csproj" />

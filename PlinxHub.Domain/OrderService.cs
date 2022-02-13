@@ -5,7 +5,6 @@ using PlinxHub.Infrastructure.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CryptoLib;
 using FiLogger.Service.Services;
 using PlinxHub.Common.Enumerations;
 using PlinxHub.Common.Models.Email;
@@ -21,7 +20,6 @@ namespace PlinxHub.Service
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IApiKeyGen _apiKeyGen;
-        private readonly ICryptoManager _cryptoManager;
         private readonly IEmailService _emailService;
         private readonly IEmailRepository _emailRepository;
         private readonly IOptions<AppSettings> _appSettings;
@@ -29,14 +27,12 @@ namespace PlinxHub.Service
         public OrderService(
             IOrderRepository orderRepository,
             IApiKeyGen apiKeyGen,
-            ICryptoManager cryptoManager,
             IEmailService emailService,
             IEmailRepository emailRepository,
             IOptions<AppSettings> appSettings)
         {
             _orderRepository = orderRepository;
             _apiKeyGen = apiKeyGen;
-            _cryptoManager = cryptoManager;
             _emailService = emailService;
             _emailRepository = emailRepository;
             _appSettings = appSettings;
@@ -46,7 +42,7 @@ namespace PlinxHub.Service
             await _orderRepository.Get(filters);
 
         public async Task<string> GetApiKeyByOrder(Guid orderNumber) =>
-           _cryptoManager.GetDecryptedValue(await _orderRepository.GetApiKeyByOrder(orderNumber));
+           await _orderRepository.GetApiKeyByOrder(orderNumber);
 
         public async Task<Order> GetOrder(Guid id) =>
             await _orderRepository.Get(id);
@@ -59,7 +55,7 @@ namespace PlinxHub.Service
 
             var response = _orderRepository.Create(order);
 
-            var encyptedKey = _cryptoManager.GetEncryptedValue(_apiKeyGen.CreateNew);
+            var encyptedKey = _apiKeyGen.CreateNew;
 
             var newApiKey = new ApiKey
             {

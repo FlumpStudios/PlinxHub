@@ -18,7 +18,6 @@ using System.Reflection;
 using System.IO;
 using System;
 using PlinxHub.Common.Crypto;
-using CryptoLib;
 using FiLogger.Service.Services;
 using System.Threading.Tasks;
 using PlinxHub.Common.Extensions;
@@ -140,17 +139,13 @@ namespace PlinxHub
             // requires
             // using Microsoft.AspNetCore.Identity.UI.Services;
             // using WebPWrecover.Services;
-            services.AddTransient<IEmailSender, EmailSender>();
-            
-            services.AddCryptoManager(
-               _secrets.EncryptionCipher.InputString,
-               _secrets.EncryptionCipher.Salt);
+            services.AddScoped<IEmailSender, EmailSender>();
 
-            services.AddTransient<IEmailRepository, EmailRepository>();
-            services.AddTransient<IEmailService, EmailService>();
-            services.AddTransient<IOrderRepository, OrderRepository>();
-            services.AddTransient<IOrderService, OrderService>();
-            services.AddTransient<IApiKeyGen, ApiKeyGen>();
+            services.AddScoped<IEmailRepository, EmailRepository>();
+            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IApiKeyGen, ApiKeyGen>();
             MapperConfiguration config = MapperConfig.Get();
             services.AddSingleton<IMapper>(new Mapper(config));
         }

@@ -3,7 +3,6 @@ using vm = PlinxHub.API.Dtos;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using PlinxHub.Service;
-using CryptoLib;
 
 namespace PlinxHub.API.ApiController
 {
@@ -18,22 +17,18 @@ namespace PlinxHub.API.ApiController
 
         private readonly IOrderService _orderService;
         private readonly IMapper _mapper;
-        private readonly ICryptoManager _cryptoManager;
 
         /// <summary>
         /// Order api controller constructor method
         /// </summary>
         /// <param name="orderService"></param>
         /// <param name="mapper"></param>
-        /// /// <param name="cryptoManager"></param>
         public OrderController(
             IOrderService orderService,
-            IMapper mapper,
-            ICryptoManager cryptoManager)
+            IMapper mapper)
         {
             _orderService = orderService;
             _mapper = mapper;
-            _cryptoManager = cryptoManager;
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace PlinxHub.API.ApiController
         [HttpGet("GetOrder")]
         public async Task<ActionResult<vm.Order>> GetOrder()
         {
-            var key =  _cryptoManager.GetEncryptedValue(GetApiKey);
+            var key =  GetApiKey;
             if (string.IsNullOrEmpty(key)) return Unauthorized();
 
             var order = await _orderService.GetOrderByApiKey(key);

@@ -5,7 +5,6 @@ namespace PlinxHub.Common.Models
     public class AppSecrets
     {
         public Authentication Authentication { get; set; }
-        public EncryptionCipher EncryptionCipher { get; set; }
         public string SendGridApiKey { get; set; }
         public Authorisation Authorisation { get; set; }
     }
@@ -21,13 +20,6 @@ namespace PlinxHub.Common.Models
     {
         public string AppID { get; set; }
         public string AppSecret { get; set; }
-    }
-
-    public class EncryptionCipher
-    {
-        public string InputString { get; set; }
-
-        public string Salt { get; set; }
     }
 
     public class Authorisation

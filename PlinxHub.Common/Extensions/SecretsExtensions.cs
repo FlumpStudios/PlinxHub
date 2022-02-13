@@ -41,11 +41,7 @@ namespace PlinxHub.Common.Extensions
                 }
             };
             _secrets.SendGridApiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-            _secrets.EncryptionCipher = new EncryptionCipher
-            {
-                InputString = Environment.GetEnvironmentVariable("ENCRYPTION_INPUT"),
-                Salt = Environment.GetEnvironmentVariable("ENCRYPTION_SALT")
-            };
+            
 
             return _secrets;
         }
